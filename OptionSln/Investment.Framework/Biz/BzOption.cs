@@ -100,7 +100,7 @@ namespace Investment.Framework.Biz
 
                         for (int i = monthlist.Count - 1; i >= 0; i--)
                         {
-                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - monthlist[i].capital) / monthlist[i].capital / (weeklist.Count - i) * 1200).ToString("#0.00"));
+                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - monthlist[i].capital) / monthlist[i].capital / (monthlist.Count - i) * 1200).ToString("#0.00"));
 
                         }
                         sb.Append("\r\nvar monthinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(monthlist, iso) + ";");
