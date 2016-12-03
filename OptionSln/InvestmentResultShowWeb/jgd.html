@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>交割单信息</title>
+    <link type="text/css" rel="stylesheet" href="css/css.css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="js/stockdata.js?31"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/jgd.js"></script>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script>
+        $(document).ready(function () {
+            jgd.init();
+        });
+    </script>
+
+</head>
+<body class="bmp_body" scroll="auto">
+    <div class="bmp_header">
+        <div class="bmp_banner">
+            <div class="bmp_function">
+
+            </div>
+            <div class="bmp_timeshow">
+                <span id="idtime"></span>
+            </div>
+            <div class="bmp_statusshow">
+                <span id="astatus"></span>
+            </div>
+            <div class="bmp_bannertitle">
+                <ul id="ulvwtype">
+                    <li id="sptitle" class="bmp_bannertitlespan">交割单信息</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;background-color: #fff">
+        <div class="bmp_search">
+            <input type="text" class="Wdate" id="txtStart" onFocus="WdatePicker({ minDate: '#F{$dp.$D(\'txtEnd\',{M:-1});}', maxDate: '%y-%M-%d' })" />
+            <input type="text" class="Wdate" id="txtEnd" onFocus="WdatePicker({ maxDate: '#F{$dp.$D(\'txtStart\',{M:1})||\'%y-%M-%d\';}' })" />
+            <input type="button" id="btnSearch" class="bmp_button01" value="查询" />
+        </div>  
+        <table style="width:100%;" class="table04" id="tbjgd">
+            <thead>
+                <tr>
+                    <th>成交日期</th><th>证券代码</th><th>证券名称</th><th>业务名称</th><th>成交价格</th><th>成交数量</th><th>成交金额</th><th>清算金额</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+
+        </table>
+
+    </div>
+</body>
+</html>
