@@ -31,6 +31,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InvestmentResultShowWeb", "
 		DefaultWebSiteLanguage = "Visual Basic"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalTool", "CalTool\CalTool.csproj", "{83C83573-D7AA-4F54-9904-A9635963B0E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{BD7967D2-9F66-4487-AFC6-3CE04E7E4AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD7967D2-9F66-4487-AFC6-3CE04E7E4AAD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD7967D2-9F66-4487-AFC6-3CE04E7E4AAD}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{83C83573-D7AA-4F54-9904-A9635963B0E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C83573-D7AA-4F54-9904-A9635963B0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C83573-D7AA-4F54-9904-A9635963B0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C83573-D7AA-4F54-9904-A9635963B0E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

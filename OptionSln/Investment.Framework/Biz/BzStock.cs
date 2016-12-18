@@ -418,7 +418,7 @@ namespace Investment.Framework.Biz
                     tbConfig config = db.tbConfig.FirstOrDefault();
                     if (config != null)
                     {
-                        startTime = config.StartTime;
+                        startTime = config.StartTime.AddDays(-7);
 
                     }
                     List<tbStockIndexPrice> existedList = db.tbStockIndexPrice.Where(w => w.日期 >= startTime).ToList();
