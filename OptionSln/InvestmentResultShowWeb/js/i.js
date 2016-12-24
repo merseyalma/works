@@ -199,7 +199,7 @@ function showView(dotNum, type) {
 
         assetMax = assetMax + 0.2;
         assetMin = assetMin - 0.2;
-
+        console.log(assetMax.toString() + ' ' + assetMin.toString());
         //timeArr = timeArr.reverse();
         //assetDataArray = assetDataArray.reverse();
 
@@ -317,6 +317,7 @@ function showView(dotNum, type) {
         szMax = Math.ceil(szMax + 5);
         szMin = Math.floor(szMin - 5);
 
+      
         //szDataArray = szDataArray.reverse();
 
         $('#divsz').highcharts({
