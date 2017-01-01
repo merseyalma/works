@@ -37,7 +37,6 @@ var minLabel = {
 };
 
 function loadData(dotNum, type) {
-
     Highcharts.theme = {
         colors: ["#7cb5ec", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
            "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
@@ -161,7 +160,7 @@ function showView(dotNum, type) {
         ///资产 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_asset = info[i].profit / 10000.0;
+                var m_asset = info[i][2] / 10000.0;
                 m_asset = Number(m_asset.toFixed(2));
                 if (assetMax < m_asset)
                     assetMax = m_asset;
@@ -172,8 +171,8 @@ function showView(dotNum, type) {
        
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                timeArr.push(info[i].t);
-                var m_asset = info[i].profit / 10000.0;
+                timeArr.push(info[i][0]);
+                var m_asset = info[i][2]/ 10000.0;
                 m_asset = Number(m_asset.toFixed(2));
                 if (m_asset == assetMax) {
                     assetDataArray.push({
@@ -198,8 +197,7 @@ function showView(dotNum, type) {
             assetMin = assetOrginal;
 
         assetMax = assetMax + 0.2;
-        assetMin = assetMin - 0.2;
-        console.log(assetMax.toString() + ' ' + assetMin.toString());
+        assetMin = assetMin - 0.2; 
         //timeArr = timeArr.reverse();
         //assetDataArray = assetDataArray.reverse();
 
@@ -257,45 +255,24 @@ function showView(dotNum, type) {
                 data: assetDataArray,
                 showInLegend: false
             }]
-        });
+        }); 
 
-
-        //资产end
-
-        //风险度 start
-
-        for (var i = 0; i < info.length; i++) {
-            if (i < dotNum) {
-                var m_risk = info[i].risk;               
-                var m_annual = info[i].annualrate;                
-                if (riskMax < m_risk)
-                    riskMax = m_risk;
-                if (riskMin > m_risk)
-                    riskMin = m_risk;
-                if (rateMax < m_annual)
-                    rateMax = m_annual;
-                if (rateMin > m_annual)
-                    rateMin = m_annual;
-            }
-        }
- 
+        //资产end 
 
         // 上证 start
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_sz = info[i].sz  ; 
+                var m_sz = info[i][1]  ; 
                 if (szMax < m_sz)
                     szMax = m_sz;
                 if (szMin > m_sz)
                     szMin = m_sz;
             }
-        }
-
-
+        } 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_sz = info[i].sz;
+                var m_sz = info[i][1];
                 if (m_sz == szMax) {
                     szDataArray.push({
                         dataLabels: maxLabel,
@@ -315,9 +292,7 @@ function showView(dotNum, type) {
             }
         }
         szMax = Math.ceil(szMax + 5);
-        szMin = Math.floor(szMin - 5);
-
-      
+        szMin = Math.floor(szMin - 5); 
         //szDataArray = szDataArray.reverse();
 
         $('#divsz').highcharts({

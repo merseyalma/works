@@ -304,9 +304,9 @@ namespace Investment.Framework.Biz
                     DateTime startTime = DateTime.Parse("2015-4-21");
 
 
-                    List<ProfitModel> profitDayList = new List<ProfitModel>();
-                    List<ProfitModel> profitWeekList = new List<ProfitModel>();
-                    List<ProfitModel> profitMonthList = new List<ProfitModel>();
+                    StringBuilder profitDayList = new StringBuilder();
+                    StringBuilder profitWeekList = new StringBuilder();
+                    StringBuilder profitMonthList = new StringBuilder();
 
 
                     int days = (int)Math.Floor((DateTime.Today - startTime).TotalDays);
@@ -357,18 +357,21 @@ namespace Investment.Framework.Biz
                                 if (shangzheng != null)
                                 {
                                     sb.AppendFormat("{0},{1},{2},{3}\r\n", startTime.ToString("yyyy-MM-dd"), shizhi, qingsuanjine, qingsuanjine + shizhi);
+                                    //  {"t":"2015-04-21","sz":4293.6200,"profit":0.0,"asset":0.0}
+                                 //   ProfitModel profit = new ProfitModel { t = startTime.ToString("yyyy-MM-dd"), asset = shizhi, profit = qingsuanjine + shizhi, sz = shangzheng.收盘价格 };
 
-                                    ProfitModel profit = new ProfitModel { t = startTime.ToString("yyyy-MM-dd"), asset = shizhi, profit = qingsuanjine + shizhi, sz = shangzheng.收盘价格 };
-                                    profitDayList.Add(profit);
+                                    string strProfit = string.Format(",[\"{0}\",{1},{2},{3}]", startTime.ToString("yyyy-MM-dd"), shangzheng.收盘价格, qingsuanjine + shizhi, shizhi);
+
+                                    profitDayList.Append(strProfit);
 
 
                                     if (shangzheng.交易日类型.IndexOf("1") != -1)
                                     {
-                                        profitWeekList.Add(profit);
+                                        profitWeekList.Append(strProfit);
                                     }
                                     if (shangzheng.交易日类型.IndexOf("2") != -1)
                                     {
-                                        profitMonthList.Add(profit);
+                                        profitMonthList.Append(strProfit);
                                     }
                                 }
                             }
@@ -385,9 +388,10 @@ namespace Investment.Framework.Biz
                     }
                     using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "idata.js"))
                     {
-                        sw.Write("var dayinfo =" + JsonConvert.SerializeObject(profitDayList) + ";");
-                        sw.Write("\r\nvar weekinfo =" + JsonConvert.SerializeObject(profitWeekList) + ";");
-                        sw.Write("\r\nvar monthinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(profitMonthList) + ";");
+                        sw.Write("//时间,上证,收益,资产");
+                        sw.Write("\r\nvar dayinfo =[" + profitDayList.ToString().Substring(1) + "];");
+                        sw.Write("\r\nvar weekinfo =[" + profitWeekList.ToString().Substring(1) + "];");
+                        sw.Write("\r\nvar monthinfo =[" + profitMonthList.ToString().Substring(1) + "];");
                     }
                 }
             }

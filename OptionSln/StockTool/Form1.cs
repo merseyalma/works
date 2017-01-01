@@ -37,10 +37,10 @@ namespace StockTool
 
         private void btnProfit_Click(object sender, EventArgs e)
         {
-
+            DateTime now = DateTime.Now;
             string err = BzStock.CalculateProfit();
 
-            MessageBox.Show(err == string.Empty ? "完成" : err);
+            MessageBox.Show(err == string.Empty ? "完成" +((DateTime.Now-now).TotalMilliseconds) : err);
         }
 
         private void btnSZIndexImport_Click(object sender, EventArgs e)
