@@ -156,7 +156,7 @@ function showView(dotNum, type) {
             info = weekinfo;
         if (type == 2)
             info = monthinfo;
-        ///资产 start
+        ///盈亏 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
                 var m_asset = info[i][2] ;
@@ -201,7 +201,7 @@ function showView(dotNum, type) {
 
         $('#divasset').highcharts({
             title: {
-                text: '资产',
+                text: '盈亏',
                 x: 10
             },
             xAxis: {
@@ -236,13 +236,13 @@ function showView(dotNum, type) {
             },
 
             series: [{
-                name: '资产',
+                name: '盈亏',
                 data: assetDataArray,
                 showInLegend: false
             }]
         }); 
 
-        //资产end 
+        //盈亏end 
 
         // 上证 start
 
