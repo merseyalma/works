@@ -32,6 +32,7 @@
             this.btnStockPriceImport = new System.Windows.Forms.Button();
             this.btnProfit = new System.Windows.Forms.Button();
             this.btnSZIndexImport = new System.Windows.Forms.Button();
+            this.btnExportProfit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnJGD
@@ -66,7 +67,7 @@
             // 
             // btnSZIndexImport
             // 
-            this.btnSZIndexImport.Location = new System.Drawing.Point(22, 143);
+            this.btnSZIndexImport.Location = new System.Drawing.Point(22, 183);
             this.btnSZIndexImport.Name = "btnSZIndexImport";
             this.btnSZIndexImport.Size = new System.Drawing.Size(92, 23);
             this.btnSZIndexImport.TabIndex = 4;
@@ -74,11 +75,22 @@
             this.btnSZIndexImport.UseVisualStyleBackColor = true;
             this.btnSZIndexImport.Click += new System.EventHandler(this.btnSZIndexImport_Click);
             // 
+            // btnExportProfit
+            // 
+            this.btnExportProfit.Location = new System.Drawing.Point(22, 141);
+            this.btnExportProfit.Name = "btnExportProfit";
+            this.btnExportProfit.Size = new System.Drawing.Size(118, 23);
+            this.btnExportProfit.TabIndex = 5;
+            this.btnExportProfit.Text = "导出每日收益";
+            this.btnExportProfit.UseVisualStyleBackColor = true;
+            this.btnExportProfit.Click += new System.EventHandler(this.btnExportProfit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(275, 190);
+            this.ClientSize = new System.Drawing.Size(277, 277);
+            this.Controls.Add(this.btnExportProfit);
             this.Controls.Add(this.btnSZIndexImport);
             this.Controls.Add(this.btnProfit);
             this.Controls.Add(this.btnStockPriceImport);
@@ -97,6 +109,7 @@
         private System.Windows.Forms.Button btnStockPriceImport;
         private System.Windows.Forms.Button btnProfit;
         private System.Windows.Forms.Button btnSZIndexImport;
+        private System.Windows.Forms.Button btnExportProfit;
     }
 }
 

@@ -16,20 +16,6 @@
       <Column Name="股东代码" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.tbStats" Member="tbStats">
-    <Type Name="tbStats">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="日期" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Column Name="资产" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="资金" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="证券市值" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="盈亏" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="盈亏比例" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="上证指数" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="成交量" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="操作记录" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbStockExchangeList" Member="tbStockExchangeList">
     <Type Name="tbStockExchangeList">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -100,6 +86,13 @@
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Type" Type="System.String" DbType="NVarChar(12)" CanBeNull="true" />
       <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbStockProfit" Member="tbStockProfit">
+    <Type Name="tbStockProfit">
+      <Column Name="日期" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="盈亏" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="证券市值" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Proc_GetStockFirstDealDay" Method="Proc_GetStockFirstDealDay">

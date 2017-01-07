@@ -33,6 +33,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InvestmentResultShowWeb", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalTool", "CalTool\CalTool.csproj", "{83C83573-D7AA-4F54-9904-A9635963B0E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{34309345-2AF9-44C7-8C38-5EFF3E8BA1EB}"
+	ProjectSection(SolutionItems) = preProject
+		doc\sql.txt = doc\sql.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -280,15 +280,12 @@ namespace Investment.Framework.Biz
             string err = string.Empty;
             try
             {
+                //          select sum(成交数量),证券代码,证券名称 from tbStockExchangeList where 成交日期<='2015-6-17'
+                //and 业务名称 in ('证券买入','证券卖出','红股入账','新股入账' ) group by 证券代码,证券名称 having sum(成交数量)<>0;
 
-                StringBuilder sb = new StringBuilder();
-
-                //            string gupiaoshuliangsql = "select sum(成交数量),证券代码,证券名称 from tbStockExchangeList where 成交日期<='{0}' "+
-                //"and 业务名称 in ('证券买入','证券卖出','红股入账','新股入账' ) group by 证券代码,证券名称 having sum(成交数量)<>0";
-
-                //            string tbStockExchangeList = "SELECT   SUM(清算金额) AS yingli FROM      tbStockExchangeList
+                //       SELECT   SUM(清算金额) AS yingli FROM      tbStockExchangeList
                 //where 业务名称 in ('证券买入','证券卖出','红利入账','新股IPO配售确认')
-                //and 成交日期<='2015-6-17' "
+                //and 成交日期<='2015-6-17' 
 
                 List<string> yewuTotalList = new List<string>() { "证券买入", "证券卖出", "红股入账", "新股入账", "红利入账", "新股IPO配售确认" };
 
@@ -310,24 +307,27 @@ namespace Investment.Framework.Biz
                     }).ToList();
 
                     List<tbStockPrice> priceList = db.tbStockPrice.ToList();
-
-
                     List<tbStockIndexPrice> szIndexPriceList = db.tbStockIndexPrice.ToList();
 
                     DateTime startTime = DateTime.Parse("2015-4-21");
 
+                    tbConfig config = db.tbConfig.SingleOrDefault(s => s.Type == "Profit");
+                    if (config != null)
+                    {
+                        startTime = config.StartTime.AddDays(-7);
+                    }
 
-                    StringBuilder profitDayList = new StringBuilder();
-                    StringBuilder profitWeekList = new StringBuilder();
-                    StringBuilder profitMonthList = new StringBuilder();
+                    List<tbStockProfit> existedList = db.tbStockProfit.Where(w => w.日期 >= startTime).ToList();
+                    db.tbStockProfit.DeleteAllOnSubmit(existedList);
+                    db.SubmitChanges();
 
+
+                    List<tbStockProfit> profitList = new List<tbStockProfit>();
 
                     int days = (int)Math.Floor((DateTime.Today - startTime).TotalDays);
 
                     for (int i = 0; i <= days; i++)
                     {
-
-
                         if (startTime.DayOfWeek != DayOfWeek.Saturday && startTime.DayOfWeek != DayOfWeek.Sunday)
                         {
                             #region MyRegion
@@ -369,23 +369,8 @@ namespace Investment.Framework.Biz
                                 tbStockIndexPrice shangzheng = szIndexPriceList.SingleOrDefault(s => s.日期 == startTime && s.证券代码 == "000001" && s.指数类型 == "sh");
                                 if (shangzheng != null)
                                 {
-                                    sb.AppendFormat("{0},{1},{2},{3}\r\n", startTime.ToString("yyyy-MM-dd"), shizhi, qingsuanjine, qingsuanjine + shizhi);
-                                    //  {"t":"2015-04-21","sz":4293.6200,"profit":0.0,"asset":0.0}
-                                 //   ProfitModel profit = new ProfitModel { t = startTime.ToString("yyyy-MM-dd"), asset = shizhi, profit = qingsuanjine + shizhi, sz = shangzheng.收盘价格 };
+                                    profitList.Add(new tbStockProfit { 日期 = startTime, 盈亏 = qingsuanjine + shizhi, 证券市值 = shizhi });
 
-                                    string strProfit = string.Format(",[\"{0}\",{1},{2},{3}]", startTime.ToString("yyyy-MM-dd"), shangzheng.收盘价格, qingsuanjine + shizhi, shizhi);
-
-                                    profitDayList.Append(strProfit);
-
-
-                                    if (shangzheng.交易日类型.IndexOf("1") != -1)
-                                    {
-                                        profitWeekList.Append(strProfit);
-                                    }
-                                    if (shangzheng.交易日类型.IndexOf("2") != -1)
-                                    {
-                                        profitMonthList.Append(strProfit);
-                                    }
                                 }
                             }
 
@@ -393,15 +378,83 @@ namespace Investment.Framework.Biz
                         }
                         startTime = startTime.AddDays(1);
                     }
-
-
-                    using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "profit.csv"))
+                    if (config == null)
                     {
-                        sw.Write(sb.ToString());
+                        config = new tbConfig();
+                        config.StartTime = DateTime.Today;
+                        config.Type = "profit";
+                        db.tbConfig.InsertOnSubmit(config);
                     }
+                    else
+                    {
+                        config.StartTime = DateTime.Today;
+                    }
+                    db.tbStockProfit.InsertAllOnSubmit(profitList);
+                    db.SubmitChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                err = ex.Message;
+            }
+            return err;
+        }
+
+
+        public static string ExportProfit()
+        {
+            string err = string.Empty;
+            try
+            { 
+                //          select sum(成交数量),证券代码,证券名称 from tbStockExchangeList where 成交日期<='2015-6-17'
+                //and 业务名称 in ('证券买入','证券卖出','红股入账','新股入账' ) group by 证券代码,证券名称 having sum(成交数量)<>0;
+
+                //       SELECT   SUM(清算金额) AS yingli FROM      tbStockExchangeList
+                //where 业务名称 in ('证券买入','证券卖出','红利入账','新股IPO配售确认')
+                //and 成交日期<='2015-6-17' 
+
+
+                using (StocksDbDataContext db = new StocksDbDataContext())
+                {
+
+                    List<tbStockProfit> profitList = db.tbStockProfit.ToList();
+                    List<tbStockIndexPrice> szIndexPriceList = db.tbStockIndexPrice.ToList();
+
+                    StringBuilder profitDayList = new StringBuilder();
+                    StringBuilder profitWeekList = new StringBuilder();
+                    StringBuilder profitMonthList = new StringBuilder();
+
+                    foreach (tbStockProfit item in profitList)
+                    {
+                        DateTime startTime = item.日期;
+
+                        if (startTime.DayOfWeek != DayOfWeek.Saturday && startTime.DayOfWeek != DayOfWeek.Sunday)
+                        {
+                            #region MyRegion
+
+                            tbStockIndexPrice shangzheng = szIndexPriceList.SingleOrDefault(s => s.日期 == startTime && s.证券代码 == "000001" && s.指数类型 == "sh");
+                            if (shangzheng != null)
+                            { 
+                                string strProfit = string.Format(",[\"{0}\",{1},{2},{3}]", startTime.ToString("yyyy-MM-dd"), shangzheng.收盘价格, item.盈亏, item.证券市值);
+
+                                profitDayList.Append(strProfit); 
+                                if (shangzheng.交易日类型.IndexOf("1") != -1)
+                                {
+                                    profitWeekList.Append(strProfit);
+                                }
+                                if (shangzheng.交易日类型.IndexOf("2") != -1)
+                                {
+                                    profitMonthList.Append(strProfit);
+                                } 
+                            }
+
+                            #endregion
+                        }
+                    } 
                     using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "idata.js"))
                     {
-                        sw.Write("//时间,上证,收益,资产");
+                        sw.Write("//时间,上证,收益,市值");
                         sw.Write("\r\nvar dayinfo =[" + profitDayList.ToString().Substring(1) + "];");
                         sw.Write("\r\nvar weekinfo =[" + profitWeekList.ToString().Substring(1) + "];");
                         sw.Write("\r\nvar monthinfo =[" + profitMonthList.ToString().Substring(1) + "];");
@@ -415,7 +468,6 @@ namespace Investment.Framework.Biz
             }
             return err;
         }
-
         /// <summary>
         /// 导入每日上证指数
         /// </summary>
@@ -432,7 +484,7 @@ namespace Investment.Framework.Biz
                     string url = "http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?_var=kline_dayqfq&param={2}{0},day,,,{1},qfq";
 
                     DateTime startTime = DateTime.Parse("2015-4-1");
-                    tbConfig config = db.tbConfig.SingleOrDefault(s=>s.Type=="szprice");
+                    tbConfig config = db.tbConfig.SingleOrDefault(s => s.Type == "szprice");
                     if (config != null)
                     {
                         startTime = config.StartTime.AddDays(-7);

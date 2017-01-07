@@ -49,5 +49,13 @@ namespace StockTool
 
             MessageBox.Show(err == string.Empty ? "完成" : err);
         }
+
+        private void btnExportProfit_Click(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            string err = BzStock.ExportProfit();
+
+            MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
+        }
     }
 }

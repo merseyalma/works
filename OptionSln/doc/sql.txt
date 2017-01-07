@@ -1,0 +1,21 @@
+USE [Stocks]
+GO
+
+/****** Object:  Table [dbo].[tbStockProfit]    Script Date: 2017/1/7 20:48:44 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[tbStockProfit](
+	[日期] [datetime] NOT NULL,
+	[盈亏] [decimal](18, 4) NULL,
+	[证券市值] [decimal](18, 4) NULL,
+ CONSTRAINT [PK_tbStockProfit] PRIMARY KEY CLUSTERED 
+(
+	[日期] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO

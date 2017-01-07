@@ -2,8 +2,7 @@
 var riskChart = null;
 var szChart = null;
 var sz50Chart = null;
-var timeArr = [];
-var assetOrginal = 53;
+var timeArr = []; 
 var assetDataArray = [];
 var assetMax = 0;
 var assetMin = 200;
@@ -160,7 +159,7 @@ function showView(dotNum, type) {
         ///资产 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_asset = info[i][2] / 10000.0;
+                var m_asset = info[i][2] ;
                 m_asset = Number(m_asset.toFixed(2));
                 if (assetMax < m_asset)
                     assetMax = m_asset;
@@ -172,7 +171,7 @@ function showView(dotNum, type) {
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
                 timeArr.push(info[i][0]);
-                var m_asset = info[i][2]/ 10000.0;
+                var m_asset = info[i][2];
                 m_asset = Number(m_asset.toFixed(2));
                 if (m_asset == assetMax) {
                     assetDataArray.push({
@@ -193,9 +192,7 @@ function showView(dotNum, type) {
 
             }
         }
-        if (assetMin > assetOrginal)
-            assetMin = assetOrginal;
-
+        
         assetMax = assetMax + 0.2;
         assetMin = assetMin - 0.2; 
         //timeArr = timeArr.reverse();
@@ -213,21 +210,9 @@ function showView(dotNum, type) {
             yAxis: {
                 title: {
                     text: '金额'
-                },
-                plotLines: [{
-                    value: assetOrginal,
-                    width: 2,
-                    color: '#ff0000',
-                    label: {
-                        text: "初始资产" + assetOrginal + '万', style: {
-                            color: 'red',
-                            fontWeight: 'bold',
-                            fontSize: '14px'
-                        }
-                    }
-                }],
+                }, 
                 labels: {
-                    format: "{value}万"
+                    format: "{value}"
                 },
                 min: assetMin,
                 max: assetMax

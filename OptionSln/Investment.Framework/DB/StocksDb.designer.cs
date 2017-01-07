@@ -33,9 +33,6 @@ namespace Investment.Framework.DB
     partial void InserttbStockShare(tbStockShare instance);
     partial void UpdatetbStockShare(tbStockShare instance);
     partial void DeletetbStockShare(tbStockShare instance);
-    partial void InserttbStats(tbStats instance);
-    partial void UpdatetbStats(tbStats instance);
-    partial void DeletetbStats(tbStats instance);
     partial void InserttbStockExchangeList(tbStockExchangeList instance);
     partial void UpdatetbStockExchangeList(tbStockExchangeList instance);
     partial void DeletetbStockExchangeList(tbStockExchangeList instance);
@@ -51,6 +48,9 @@ namespace Investment.Framework.DB
     partial void InserttbConfig(tbConfig instance);
     partial void UpdatetbConfig(tbConfig instance);
     partial void DeletetbConfig(tbConfig instance);
+    partial void InserttbStockProfit(tbStockProfit instance);
+    partial void UpdatetbStockProfit(tbStockProfit instance);
+    partial void DeletetbStockProfit(tbStockProfit instance);
     #endregion
 		
 		public StocksDbDataContext() : 
@@ -91,14 +91,6 @@ namespace Investment.Framework.DB
 			}
 		}
 		
-		public System.Data.Linq.Table<tbStats> tbStats
-		{
-			get
-			{
-				return this.GetTable<tbStats>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tbStockExchangeList> tbStockExchangeList
 		{
 			get
@@ -136,6 +128,14 @@ namespace Investment.Framework.DB
 			get
 			{
 				return this.GetTable<tbConfig>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbStockProfit> tbStockProfit
+		{
+			get
+			{
+				return this.GetTable<tbStockProfit>();
 			}
 		}
 		
@@ -448,284 +448,6 @@ namespace Investment.Framework.DB
 					this._股东代码 = value;
 					this.SendPropertyChanged("股东代码");
 					this.On股东代码Changed();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbStats")]
-	public partial class tbStats : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.DateTime _日期;
-		
-		private decimal _资产;
-		
-		private decimal _资金;
-		
-		private decimal _证券市值;
-		
-		private decimal _盈亏;
-		
-		private System.Nullable<decimal> _盈亏比例;
-		
-		private decimal _上证指数;
-		
-		private System.Nullable<double> _成交量;
-		
-		private string _操作记录;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void On日期Changing(System.DateTime value);
-    partial void On日期Changed();
-    partial void On资产Changing(decimal value);
-    partial void On资产Changed();
-    partial void On资金Changing(decimal value);
-    partial void On资金Changed();
-    partial void On证券市值Changing(decimal value);
-    partial void On证券市值Changed();
-    partial void On盈亏Changing(decimal value);
-    partial void On盈亏Changed();
-    partial void On盈亏比例Changing(System.Nullable<decimal> value);
-    partial void On盈亏比例Changed();
-    partial void On上证指数Changing(decimal value);
-    partial void On上证指数Changed();
-    partial void On成交量Changing(System.Nullable<double> value);
-    partial void On成交量Changed();
-    partial void On操作记录Changing(string value);
-    partial void On操作记录Changed();
-    #endregion
-		
-		public tbStats()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_日期", DbType="Date NOT NULL")]
-		public System.DateTime 日期
-		{
-			get
-			{
-				return this._日期;
-			}
-			set
-			{
-				if ((this._日期 != value))
-				{
-					this.On日期Changing(value);
-					this.SendPropertyChanging();
-					this._日期 = value;
-					this.SendPropertyChanged("日期");
-					this.On日期Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_资产", DbType="Decimal(18,2) NOT NULL")]
-		public decimal 资产
-		{
-			get
-			{
-				return this._资产;
-			}
-			set
-			{
-				if ((this._资产 != value))
-				{
-					this.On资产Changing(value);
-					this.SendPropertyChanging();
-					this._资产 = value;
-					this.SendPropertyChanged("资产");
-					this.On资产Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_资金", DbType="Decimal(18,2) NOT NULL")]
-		public decimal 资金
-		{
-			get
-			{
-				return this._资金;
-			}
-			set
-			{
-				if ((this._资金 != value))
-				{
-					this.On资金Changing(value);
-					this.SendPropertyChanging();
-					this._资金 = value;
-					this.SendPropertyChanged("资金");
-					this.On资金Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_证券市值", DbType="Decimal(18,2) NOT NULL")]
-		public decimal 证券市值
-		{
-			get
-			{
-				return this._证券市值;
-			}
-			set
-			{
-				if ((this._证券市值 != value))
-				{
-					this.On证券市值Changing(value);
-					this.SendPropertyChanging();
-					this._证券市值 = value;
-					this.SendPropertyChanged("证券市值");
-					this.On证券市值Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_盈亏", DbType="Decimal(18,2) NOT NULL")]
-		public decimal 盈亏
-		{
-			get
-			{
-				return this._盈亏;
-			}
-			set
-			{
-				if ((this._盈亏 != value))
-				{
-					this.On盈亏Changing(value);
-					this.SendPropertyChanging();
-					this._盈亏 = value;
-					this.SendPropertyChanged("盈亏");
-					this.On盈亏Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_盈亏比例", DbType="Decimal(4,2)")]
-		public System.Nullable<decimal> 盈亏比例
-		{
-			get
-			{
-				return this._盈亏比例;
-			}
-			set
-			{
-				if ((this._盈亏比例 != value))
-				{
-					this.On盈亏比例Changing(value);
-					this.SendPropertyChanging();
-					this._盈亏比例 = value;
-					this.SendPropertyChanged("盈亏比例");
-					this.On盈亏比例Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_上证指数", DbType="Decimal(18,2) NOT NULL")]
-		public decimal 上证指数
-		{
-			get
-			{
-				return this._上证指数;
-			}
-			set
-			{
-				if ((this._上证指数 != value))
-				{
-					this.On上证指数Changing(value);
-					this.SendPropertyChanging();
-					this._上证指数 = value;
-					this.SendPropertyChanged("上证指数");
-					this.On上证指数Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_成交量", DbType="Float")]
-		public System.Nullable<double> 成交量
-		{
-			get
-			{
-				return this._成交量;
-			}
-			set
-			{
-				if ((this._成交量 != value))
-				{
-					this.On成交量Changing(value);
-					this.SendPropertyChanging();
-					this._成交量 = value;
-					this.SendPropertyChanged("成交量");
-					this.On成交量Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_操作记录", DbType="NVarChar(MAX)")]
-		public string 操作记录
-		{
-			get
-			{
-				return this._操作记录;
-			}
-			set
-			{
-				if ((this._操作记录 != value))
-				{
-					this.On操作记录Changing(value);
-					this.SendPropertyChanging();
-					this._操作记录 = value;
-					this.SendPropertyChanged("操作记录");
-					this.On操作记录Changed();
 				}
 			}
 		}
@@ -2164,6 +1886,116 @@ namespace Investment.Framework.DB
 					this._StartTime = value;
 					this.SendPropertyChanged("StartTime");
 					this.OnStartTimeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbStockProfit")]
+	public partial class tbStockProfit : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.DateTime _日期;
+		
+		private decimal _盈亏;
+		
+		private decimal _证券市值;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void On日期Changing(System.DateTime value);
+    partial void On日期Changed();
+    partial void On盈亏Changing(decimal value);
+    partial void On盈亏Changed();
+    partial void On证券市值Changing(decimal value);
+    partial void On证券市值Changed();
+    #endregion
+		
+		public tbStockProfit()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_日期", DbType="DateTime NOT NULL", IsPrimaryKey=true)]
+		public System.DateTime 日期
+		{
+			get
+			{
+				return this._日期;
+			}
+			set
+			{
+				if ((this._日期 != value))
+				{
+					this.On日期Changing(value);
+					this.SendPropertyChanging();
+					this._日期 = value;
+					this.SendPropertyChanged("日期");
+					this.On日期Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_盈亏", DbType="Decimal(18,4) NOT NULL")]
+		public decimal 盈亏
+		{
+			get
+			{
+				return this._盈亏;
+			}
+			set
+			{
+				if ((this._盈亏 != value))
+				{
+					this.On盈亏Changing(value);
+					this.SendPropertyChanging();
+					this._盈亏 = value;
+					this.SendPropertyChanged("盈亏");
+					this.On盈亏Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_证券市值", DbType="Decimal(18,4) NOT NULL")]
+		public decimal 证券市值
+		{
+			get
+			{
+				return this._证券市值;
+			}
+			set
+			{
+				if ((this._证券市值 != value))
+				{
+					this.On证券市值Changing(value);
+					this.SendPropertyChanging();
+					this._证券市值 = value;
+					this.SendPropertyChanged("证券市值");
+					this.On证券市值Changed();
 				}
 			}
 		}
