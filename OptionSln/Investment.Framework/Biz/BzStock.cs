@@ -173,9 +173,10 @@ namespace Investment.Framework.Biz
                     int perCount = 1000;
 
                     DateTime time = DateTime.Parse("2015-4-21");
-                    if (db.tbStockPrice.Count() > 0)
+                    tbConfig config = db.tbConfig.SingleOrDefault(s => s.Type == "StockPrice");
+                    if (config != null)
                     {
-                        time = db.tbStockPrice.Max(m => m.日期).AddDays(-1);
+                        time = config.StartTime.AddDays(-7);
 
                     }
                     List<tbStockPrice> existedList = db.tbStockPrice.Where(w => w.日期 >= time).ToList();
@@ -250,6 +251,18 @@ namespace Investment.Framework.Biz
                         stockPriceList = new List<tbStockPrice>();
                         count = 0;
                     }
+                    if (config == null)
+                    {
+                        config = new tbConfig();
+                        config.StartTime = DateTime.Today;
+                        config.Type = "stockprice";
+                        db.tbConfig.InsertOnSubmit(config);
+                    }
+                    else
+                    {
+                        config.StartTime = DateTime.Today;
+                    }
+                    db.SubmitChanges();
                 }
             }
             catch (Exception ex)
@@ -419,7 +432,7 @@ namespace Investment.Framework.Biz
                     string url = "http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?_var=kline_dayqfq&param={2}{0},day,,,{1},qfq";
 
                     DateTime startTime = DateTime.Parse("2015-4-1");
-                    tbConfig config = db.tbConfig.FirstOrDefault();
+                    tbConfig config = db.tbConfig.SingleOrDefault(s=>s.Type=="szprice");
                     if (config != null)
                     {
                         startTime = config.StartTime.AddDays(-7);
@@ -506,6 +519,7 @@ namespace Investment.Framework.Biz
                         {
                             config = new tbConfig();
                             config.StartTime = DateTime.Today;
+                            config.Type = "szprice";
                             db.tbConfig.InsertOnSubmit(config);
                         }
                         else
