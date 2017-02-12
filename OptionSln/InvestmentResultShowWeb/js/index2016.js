@@ -3,16 +3,16 @@ var riskChart = null;
 var szChart = null;
 var sz50Chart = null;
 var timeArr = [];
-var assetOrginal = 1.0;
+var assetOrginal = 53;
 var assetDataArray = [];
 var assetMax = 0;
-var assetMin = 1.1;
+var assetMin = 200;
 
 var riskDataArray = [];
 var riskMax = 0;
 var riskMin = 100;
 
-
+ 
 var rateDataArray = [];
 var rateMax = 0;
 var rateMin = 100;
@@ -159,9 +159,9 @@ function showView(dotNum, type) {
         rateDataArray.splice(0, rateDataArray.length);
         sz50DataArray.splice(0, sz50DataArray.length);
         szDataArray.splice(0, szDataArray.length);
-
+     
         assetMax = 0;
-        assetMin = assetOrginal;
+        assetMin = 200;
         riskMax = 0;
         riskMin = 100;
         rateMax = 0;
@@ -178,20 +178,20 @@ function showView(dotNum, type) {
         ///资产 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_asset = info[i].asset  ;
-                
+                var m_asset = info[i].asset / 10000.0;
+                m_asset = Number(m_asset.toFixed(2));
                 if (assetMax < m_asset)
                     assetMax = m_asset;
                 if (assetMin > m_asset)
                     assetMin = m_asset;
             }
         }
-
+       
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
                 timeArr.push(info[i].t);
-                var m_asset = info[i].asset ;
-              
+                var m_asset = info[i].asset / 10000.0;
+                m_asset = Number(m_asset.toFixed(2));
                 if (m_asset == assetMax) {
                     assetDataArray.push({
                         dataLabels: maxLabel,
@@ -214,8 +214,8 @@ function showView(dotNum, type) {
         if (assetMin > assetOrginal)
             assetMin = assetOrginal;
 
-        assetMax = assetMax + 0.0002;
-        assetMin = assetMin - 0.0002;
+        assetMax = assetMax + 0.2;
+        assetMin = assetMin - 0.2;
 
         timeArr = timeArr.reverse();
         assetDataArray = assetDataArray.reverse();
@@ -223,7 +223,7 @@ function showView(dotNum, type) {
 
         $('#divasset').highcharts({
             title: {
-                text: '净值',
+                text: '资产',
                 x: 10
             },
             xAxis: {
@@ -231,14 +231,14 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: ''
+                   text: '' 
                 },
                 plotLines: [{
                     value: assetOrginal,
                     width: 2,
                     color: '#ff0000',
                     label: {
-                        text: "初始净值1.0", style: {
+                        text: "初始资产" + assetOrginal + '万', style: {
                             color: 'red',
                             fontWeight: 'bold',
                             fontSize: '14px'
@@ -246,7 +246,7 @@ function showView(dotNum, type) {
                     }
                 }],
                 labels: {
-                    format: "{value}"
+                    format: "{value}万"
                 },
                 min: assetMin,
                 max: assetMax
@@ -270,7 +270,7 @@ function showView(dotNum, type) {
             },
 
             series: [{
-                name: '净值',
+                name: '资产',
                 data: assetDataArray,
                 showInLegend: false
             }]
@@ -283,8 +283,8 @@ function showView(dotNum, type) {
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_risk = info[i].risk;
-                var m_annual = info[i].annualrate;
+                var m_risk = info[i].risk;               
+                var m_annual = info[i].annualrate;                
                 if (riskMax < m_risk)
                     riskMax = m_risk;
                 if (riskMin > m_risk)
@@ -296,10 +296,10 @@ function showView(dotNum, type) {
             }
         }
 
-
+      
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_risk = info[i].risk;
+                var m_risk = info[i].risk; 
                 if (m_risk == riskMax) {
                     riskDataArray.push({
                         dataLabels: maxLabel,
@@ -319,7 +319,7 @@ function showView(dotNum, type) {
 
 
                 var m_annual = info[i].annualrate;
-
+              
                 if (m_annual == rateMax) {
                     rateDataArray.push({
                         dataLabels: maxLabel,
@@ -336,7 +336,7 @@ function showView(dotNum, type) {
                 else {
                     rateDataArray.push(m_annual);
                 }
-
+             
             }
         }
         var rMax = riskMax;
@@ -348,7 +348,7 @@ function showView(dotNum, type) {
 
         rMax = Math.ceil(rMax + 0.2);
         rMin = Math.floor(rMin - 0.2);
-
+     
         riskDataArray = riskDataArray.reverse();
         rateDataArray = rateDataArray.reverse();
         $('#divrisk').highcharts({
@@ -361,7 +361,7 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: '' 
                 },
                 labels: {
                     format: "{value}%"
@@ -402,7 +402,7 @@ function showView(dotNum, type) {
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_sz = info[i].sz;
+                var m_sz = info[i].sz  ; 
                 if (szMax < m_sz)
                     szMax = m_sz;
                 if (szMin > m_sz)
@@ -447,7 +447,7 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: ''
+                    text: '' 
                 },
                 min: szMin,
                 max: szMax
@@ -483,7 +483,7 @@ function showView(dotNum, type) {
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_sz50 = info[i].sz50;
+                var m_sz50 = info[i].sz50; 
                 if (sz50Max < m_sz50)
                     sz50Max = m_sz50;
                 if (sz50Min > m_sz50)
@@ -493,7 +493,7 @@ function showView(dotNum, type) {
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_sz50 = info[i].sz50;
+                var m_sz50 = info[i].sz50; 
                 if (m_sz50 == sz50Max) {
                     sz50DataArray.push({
                         dataLabels: maxLabel,
@@ -527,7 +527,7 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: ''
+                   text: '' 
                 },
                 min: sz50Min,
                 max: sz50Max
@@ -561,7 +561,8 @@ function showView(dotNum, type) {
     }
 }
 
-function setSize() {
-    var winHeight = Number($(window).height());
+function setSize()
+{
+    var winHeight = Number($(window).height()); 
     $(".hq01").height((winHeight - 76) / 2);
 }

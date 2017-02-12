@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,11 @@ namespace Investment.Framework.Entity
     public class StockOptionModel
     {
         public DateTime t { get; set; }
+
+
         public decimal asset { get; set; }
         public decimal risk { get; set; }
+        [JsonIgnore]
         public decimal yue { get; set; }
         public decimal sz { get; set; }
         public decimal sz50 { get; set; }
@@ -18,6 +22,7 @@ namespace Investment.Framework.Entity
 
         public string dt { get; set; }
 
+        [JsonIgnore]
         /// <summary>
         /// 本金
         /// </summary>

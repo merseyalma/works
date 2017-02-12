@@ -8,10 +8,19 @@
     <meta http-equiv="Expires" content="0" />
     <title>账户信息</title>
     <link type="text/css" rel="stylesheet" href="css/css.css" />
-    <script type="text/javascript" src="js/echarts.min.js"></script>
-    <script type="text/javascript" src="js/data.js"></script>
-    <script type="text/javascript" src="js/index2.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js?20170203"></script>
+    <script type="text/javascript" src="js/highcharts.js?20170203"></script>
+    <script type="text/javascript" src="js/data.js?20170203"></script>
+    <script type="text/javascript" src="js/index.js?20170203"></script>
     <link rel="shortcut icon" href="favicon.ico" />
+    <script>
+        $(document).ready(function () { 
+            setSize();
+        });
+        $(window).resize(function () {
+            setSize();
+        });
+    </script>
 
 </head>
 <body class="bmp_body" scroll="auto" onload="loadData(20,0)">
@@ -31,7 +40,7 @@
                     <li onclick="showView(20,0)" id="li0" class="highlight">日</li>
                     <li id="li1" onclick="showView(20, 1)">周</li>
                     <li id="li2" onclick="showView(20, 2)">月</li>
-                    <li id="sptitle"><a href="all2.html" target="_blank" class="bmp_bannertitlespan">账户信息</a></li>
+                    <li id="sptitle"><a href="all.html" target="_blank" class="bmp_bannertitlespan">账户信息</a></li>
                 </ul>
             </div>
         </div>
@@ -47,7 +56,7 @@
                                 <div class="bmp_chart_tilte_func"></div>
                             </div>-->
                             <div class="bmp_chart_cnt">
-                                <div id="divasset" class="hq02"></div>
+                                <div id="divasset" class="hq01"></div>
 
                             </div>
                         </div>
@@ -59,7 +68,7 @@
                                 <div class="bmp_chart_tilte_func"></div>
                             </div>-->
                             <div class="bmp_chart_cnt">
-                                <div id="divrisk" class="hq02"></div>
+                                <div id="divrisk" class="hq01"></div>
 
                             </div>
                         </div>
@@ -67,26 +76,26 @@
                 </tr>
                 <tr>
                     <td valign="top">
-                        <div class="bmp_chart">
+                        <div class="bmp_chart"  >
                             <!--<div class="bmp_chart_tilte">
                                 <span>上证指数</span>
                                 <div class="bmp_chart_tilte_func"></div>
                             </div>-->
                             <div class="bmp_chart_cnt">
-                                <div id="divsz" class="hq02"></div>
+                                <div id="divsz" class="hq01"></div>
 
                             </div>
                         </div>
 
                     </td>
                     <td valign="top">
-                        <div class="bmp_chart">
+                        <div class="bmp_chart"  >
                             <!--<div class="bmp_chart_tilte">
                                 <span>上证50ETF</span>
                                 <div class="bmp_chart_tilte_func"></div>
                             </div>-->
                             <div class="bmp_chart_cnt">
-                                <div id="divsz50" class="hq02"></div>
+                                <div id="divsz50" class="hq01"></div>
 
 
                             </div>

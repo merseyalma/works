@@ -176,7 +176,7 @@ namespace Investment.Framework.Biz
                     tbConfig config = db.tbConfig.SingleOrDefault(s => s.Type == "StockPrice");
                     if (config != null)
                     {
-                        time = config.StartTime.AddDays(-7);
+                        time = config.StartTime.AddDays(-3);
 
                     }
                     List<tbStockPrice> existedList = db.tbStockPrice.Where(w => w.日期 >= time).ToList();

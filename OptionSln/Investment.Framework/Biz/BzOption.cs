@@ -26,7 +26,7 @@ namespace Investment.Framework.Biz
                         StringBuilder sb = new StringBuilder();
                         #region 日
 
-                        int startDay = 13;//之前5.4到5.20的13个交易日未记录 
+                        int startDay = 0;
 
                         List<tbStockOptionSummary> olist = db.tbStockOptionSummary.ToList();
                         for (int i = 0; i < olist.Count; i++)
@@ -49,6 +49,10 @@ namespace Investment.Framework.Biz
                             capital = s1.本金
 
                         }).ToList();
+                        foreach (StockOptionModel item in list)
+                        {
+                            item.asset = decimal.Parse((item.asset / item.capital).ToString("#0.000000"));
+                        }
 
                         list = list.OrderByDescending(o => o.t).ToList();
 
@@ -58,7 +62,7 @@ namespace Investment.Framework.Biz
 
                         #endregion
                         #region 周
-                        int startWeek = 3;//之前5.4到5.20的3个周未记录 
+                        int startWeek = 0;
                         List<StockOptionModel> weeklist = list.Where(w => w.dt.Contains("1")).ToList();
 
                         // 取最新一条记录
