@@ -4,7 +4,7 @@
         var nowdt = new Date();
         var now = utils.getDateStr(nowdt);
         $('#txtEnd').val(now);
-        var last = new Date(nowdt.getTime() - 730 * 86400000);
+        var last = new Date(2015,4,20,0,0,0);
         $('#txtStart').val(utils.getDateStr(last));
         var stockid = $("#slstock").val();
         for (var item in stocks) {
