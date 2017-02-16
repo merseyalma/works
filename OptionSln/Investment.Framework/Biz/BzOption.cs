@@ -79,7 +79,7 @@ namespace Investment.Framework.Biz
 
                         for (int i = weeklist.Count - 1; i >= 0; i--)
                         {
-                            weeklist[i].annualrate = decimal.Parse(((weeklist[i].asset - weeklist[i].capital) / weeklist[i].capital / (weeklist.Count - i + startWeek) * 5200).ToString("#0.00"));
+                            weeklist[i].annualrate = decimal.Parse(((weeklist[i].asset - 1)   / (weeklist.Count - i + startWeek) * 5200).ToString("#0.00"));
 
                         }
                         sb.Append("\r\nvar weekinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(weeklist, iso) + ";");
@@ -104,7 +104,7 @@ namespace Investment.Framework.Biz
 
                         for (int i = monthlist.Count - 1; i >= 0; i--)
                         {
-                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - monthlist[i].capital) / monthlist[i].capital / (monthlist.Count - i) * 1200).ToString("#0.00"));
+                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - 1) /  (monthlist.Count - i) * 1200).ToString("#0.00"));
 
                         }
                         sb.Append("\r\nvar monthinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(monthlist, iso) + ";");

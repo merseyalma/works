@@ -214,8 +214,8 @@ function showView(dotNum, type) {
         if (assetMin > assetOrginal)
             assetMin = assetOrginal;
 
-        assetMax = assetMax + 0.0002;
-        assetMin = assetMin - 0.0002;
+        assetMax = assetMax + 0.00002;
+        assetMin = assetMin - 0.00002;
 
         timeArr = timeArr.reverse();
         assetDataArray = assetDataArray.reverse();
@@ -512,8 +512,8 @@ function showView(dotNum, type) {
                 }
             }
         }
-        sz50Max = (sz50Max + 0.01).toFixed(2);
-        sz50Min = (sz50Min - 0.01).toFixed(2);
+        sz50Max = (sz50Max + 0.003).toFixed(3);
+        sz50Min = (sz50Min - 0.003).toFixed(3);
 
         sz50DataArray = sz50DataArray.reverse();
 

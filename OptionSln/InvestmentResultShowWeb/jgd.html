@@ -42,10 +42,12 @@
     </div>
     <div style="width:100%;background-color: #fff">
         <div class="bmp_search">
-            <input type="text" class="Wdate" id="txtStart" onFocus="WdatePicker({ minDate: '#F{$dp.$D(\'txtEnd\',{M:-1});}', maxDate: '%y-%M-%d' })" />
-            <input type="text" class="Wdate" id="txtEnd" onFocus="WdatePicker({ maxDate: '#F{$dp.$D(\'txtStart\',{M:1})||\'%y-%M-%d\';}' })" />
+            <select id="slstock" name="slstock" ><option value="">请选择股票</option></select>
+            <input type="text" class="Wdate" id="txtStart" onFocus="WdatePicker({ minDate: '#F{$dp.$D(\'txtEnd\',{y:-1});}', maxDate: '%y-%M-%d' })" />
+            <input type="text" class="Wdate" id="txtEnd" onFocus="WdatePicker({ maxDate: '#F{$dp.$D(\'txtStart\',{y:1})||\'%y-%M-%d\';}' })" />
             <input type="button" id="btnSearch" class="bmp_button01" value="查询" />
         </div>  
+        <div class="pdes" id="pstockdes"></div>
         <table style="width:100%;" class="table04" id="tbjgd">
             <thead>
                 <tr>
