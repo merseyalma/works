@@ -33,13 +33,14 @@
             this.btnProfit = new System.Windows.Forms.Button();
             this.btnSZIndexImport = new System.Windows.Forms.Button();
             this.btnExportProfit = new System.Windows.Forms.Button();
+            this.btnExportJgd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnJGD
             // 
             this.btnJGD.Location = new System.Drawing.Point(22, 12);
             this.btnJGD.Name = "btnJGD";
-            this.btnJGD.Size = new System.Drawing.Size(102, 23);
+            this.btnJGD.Size = new System.Drawing.Size(118, 23);
             this.btnJGD.TabIndex = 1;
             this.btnJGD.Text = "股票交割单导入";
             this.btnJGD.UseVisualStyleBackColor = true;
@@ -69,7 +70,7 @@
             // 
             this.btnSZIndexImport.Location = new System.Drawing.Point(22, 183);
             this.btnSZIndexImport.Name = "btnSZIndexImport";
-            this.btnSZIndexImport.Size = new System.Drawing.Size(92, 23);
+            this.btnSZIndexImport.Size = new System.Drawing.Size(118, 23);
             this.btnSZIndexImport.TabIndex = 4;
             this.btnSZIndexImport.Text = "导入上证指数";
             this.btnSZIndexImport.UseVisualStyleBackColor = true;
@@ -85,11 +86,22 @@
             this.btnExportProfit.UseVisualStyleBackColor = true;
             this.btnExportProfit.Click += new System.EventHandler(this.btnExportProfit_Click);
             // 
+            // btnExportJgd
+            // 
+            this.btnExportJgd.Location = new System.Drawing.Point(22, 224);
+            this.btnExportJgd.Name = "btnExportJgd";
+            this.btnExportJgd.Size = new System.Drawing.Size(118, 23);
+            this.btnExportJgd.TabIndex = 6;
+            this.btnExportJgd.Text = "导出交割单概要";
+            this.btnExportJgd.UseVisualStyleBackColor = true;
+            this.btnExportJgd.Click += new System.EventHandler(this.btnExportJgd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(277, 277);
+            this.Controls.Add(this.btnExportJgd);
             this.Controls.Add(this.btnExportProfit);
             this.Controls.Add(this.btnSZIndexImport);
             this.Controls.Add(this.btnProfit);
@@ -110,6 +122,7 @@
         private System.Windows.Forms.Button btnProfit;
         private System.Windows.Forms.Button btnSZIndexImport;
         private System.Windows.Forms.Button btnExportProfit;
+        private System.Windows.Forms.Button btnExportJgd;
     }
 }
 

@@ -57,5 +57,13 @@ namespace StockTool
 
             MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
         }
+
+        private void btnExportJgd_Click(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            string err = BzStock.ExportJgd();
+
+            MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
+        }
     }
 }

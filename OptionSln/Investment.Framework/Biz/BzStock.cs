@@ -406,7 +406,7 @@ namespace Investment.Framework.Biz
         {
             string err = string.Empty;
             try
-            { 
+            {
                 //          select sum(成交数量),证券代码,证券名称 from tbStockExchangeList where 成交日期<='2015-6-17'
                 //and 业务名称 in ('证券买入','证券卖出','红股入账','新股入账' ) group by 证券代码,证券名称 having sum(成交数量)<>0;
 
@@ -435,10 +435,10 @@ namespace Investment.Framework.Biz
 
                             tbStockIndexPrice shangzheng = szIndexPriceList.SingleOrDefault(s => s.日期 == startTime && s.证券代码 == "000001" && s.指数类型 == "sh");
                             if (shangzheng != null)
-                            { 
+                            {
                                 string strProfit = string.Format(",[\"{0}\",{1},{2},{3}]", startTime.ToString("yyyy-MM-dd"), shangzheng.收盘价格, item.盈亏, item.证券市值);
 
-                                profitDayList.Append(strProfit); 
+                                profitDayList.Append(strProfit);
                                 if (shangzheng.交易日类型.IndexOf("1") != -1)
                                 {
                                     profitWeekList.Append(strProfit);
@@ -446,12 +446,12 @@ namespace Investment.Framework.Biz
                                 if (shangzheng.交易日类型.IndexOf("2") != -1)
                                 {
                                     profitMonthList.Append(strProfit);
-                                } 
+                                }
                             }
 
                             #endregion
                         }
-                    } 
+                    }
                     using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "idata.js"))
                     {
                         sw.Write("//时间,上证,收益,市值");
@@ -601,6 +601,100 @@ namespace Investment.Framework.Biz
 
             return err;
 
+        }
+
+        /// <summary>
+        /// 导出交割单概要
+        /// </summary>
+        /// <returns></returns>
+        public static string ExportJgd()
+        {
+            string err = string.Empty;
+            try
+            {
+                List<string> yewuTotalList = new List<string>() { "证券买入", "证券卖出", "红股入账", "新股入账", "红利入账", "新股IPO配售确认" };
+
+                List<string> yewuList = new List<string>() { "证券买入", "证券卖出", "红股入账", "新股入账" };
+
+                List<string> yewuqingsuanjineList = new List<string>() { "证券买入", "证券卖出", "红利入账", "新股IPO配售确认" };
+
+                StringBuilder sb = new StringBuilder();
+
+                using (StocksDbDataContext db = new StocksDbDataContext())
+                {
+                    List<jiaogedanmodel> list = db.tbStockExchangeList.Where(w => yewuTotalList.Contains(w.业务名称)).Select(s => new jiaogedanmodel
+                    {
+                        成交日期 = s.成交日期,
+                        成交数量 = s.成交数量,
+                        清算金额 = s.清算金额,
+                        证券代码 = s.证券代码,
+                        证券名称 = s.证券名称,
+                        业务名称 = s.业务名称,
+                        成交价格 = s.成交价格
+
+                    }).ToList();
+
+                    List<stockinfo> stockList = list.Select(s => new stockinfo { 证券代码 = s.证券代码, 证券名称 = s.证券名称 }).Distinct(new istockinfoequalitycomparer()).OrderBy(o => o.证券名称).ToList();
+
+                    sb.Append("var stocks ={");
+
+                    for (int i = 0; i < stockList.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            sb.Append(",");
+                        }
+                        sb.AppendFormat("\"s{0}\":\"{1}\"", stockList[i].证券代码, stockList[i].证券名称);
+                    }
+
+                    sb.Append("};");
+                    sb.AppendLine();
+                    sb.Append("var jiaogedans =[");
+
+
+                    List<DateTime> jgddates = list.Select(s => s.成交日期.Date).Distinct().ToList();
+
+                    for (int i = 0; i < jgddates.Count; i++)
+                    {
+                        if (i > 0)
+                        {
+                            sb.Append(",");
+                        }
+                        sb.AppendFormat("{{t:\"{0}\",d:[", jgddates[i].ToString("yyyy-MM-dd"));
+
+                        DateTime next = jgddates[i].AddDays(1);
+                        List<jiaogedanmodel> subjgd = list.Where(w => w.成交日期 >= jgddates[i] && w.成交日期 < next).ToList();
+
+                        for (int j = 0; j < subjgd.Count; j++)
+                        {
+                            if (j > 0)
+                            {
+                                sb.Append(",");
+                            }
+                            //[1,"002751",61.01,200,12202.00,-12208.10],
+                            sb.AppendFormat("[{0},\"{1}\",{2},{3},{4},{5}]", (subjgd[j].业务名称 == "证券卖出" ? "0" : "1"), subjgd[j].证券代码, subjgd[j].成交价格, subjgd[j].成交数量, subjgd[j].成交价格 * subjgd[j].成交数量, subjgd[j].清算金额);
+
+                        }
+
+                        sb.Append("]}");
+                    }
+
+                    sb.Append("];");
+                }
+
+                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "stockdata.js"))
+                {
+                    sw.Write(sb.ToString());
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                err = ex.Message;
+            }
+
+            return err;
         }
     }
 }
