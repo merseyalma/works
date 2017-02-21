@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -452,7 +453,7 @@ namespace Investment.Framework.Biz
                             #endregion
                         }
                     }
-                    using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "idata.js"))
+                    using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"]   +"idata.js"))
                     {
                         sw.Write("//时间,上证,收益,市值");
                         sw.Write("\r\nvar dayinfo =[" + profitDayList.ToString().Substring(1) + "];");
@@ -682,7 +683,7 @@ namespace Investment.Framework.Biz
                     sb.Append("];");
                 }
 
-                using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "stockdata.js"))
+                using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"] + "stockdata.js"))
                 {
                     sw.Write(sb.ToString());
                 }
