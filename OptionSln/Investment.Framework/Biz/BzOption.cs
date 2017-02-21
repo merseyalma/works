@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace Investment.Framework.Biz
                 using (StocksDbDataContext db = new StocksDbDataContext())
                 {
                     #region 期权
-                    using (StreamWriter sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "data.js"))
+                    using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"] + "data.js"))
                     {
                         StringBuilder sb = new StringBuilder();
                         #region 日
