@@ -209,8 +209,20 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: '金额'
-                }, 
+                    text: ''
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 2,
+                    color: '#ff0000',
+                    label: {
+                        text: "盈亏线", style: {
+                            color: 'red',
+                            fontWeight: 'bold',
+                            fontSize: '14px'
+                        }
+                    }
+                }],
                 labels: {
                     format: "{value}"
                 },
@@ -290,7 +302,7 @@ function showView(dotNum, type) {
             },
             yAxis: {
                 title: {
-                    text: '价格'
+                    text: ''
                 },
                 min: szMin,
                 max: szMax
