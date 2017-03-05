@@ -4,7 +4,7 @@
         var nowdt = new Date();
         var now = utils.getDateStr(nowdt);
         $('#txtEnd').val(now);
-        var last = new Date(2015,4,20,0,0,0);
+        var last = new Date(2015, 4, 20, 0, 0, 0);
         $('#txtStart').val(utils.getDateStr(last));
         var stockid = $("#slstock").val();
         for (var item in stocks) {
@@ -43,18 +43,20 @@
                 for (var j = 0; j < item.d.length; j++) {
                     var jdgitem = item.d[j];
                     if (jdgitem[1] == stockid) {
-                        var isbuy = jdgitem[0] == '1';
-                        jgdhtml += '<tr class="' + (isbuy ? 'bmp_buy' : 'bmp_sell') + ' ' + altercss + '"><td>' + item.t + '</td><td>' + jdgitem[1] + '</td><td>' + stocks['s' + jdgitem[1]] + '</td><td>' + (isbuy ? '买入' : '卖出') + '</td><td>' + jdgitem[2] + '</td><td>' + jdgitem[3] + '</td><td>' + jdgitem[4] + '</td><td>' + jdgitem[5] + '</td></tr>';
+                        if (jdgitem[0] != '新股入账') {
+                            var isbuy = (jdgitem[0] == '证券买入') || (jdgitem[0] == '红利入账') || (jdgitem[0] == '红股入账') || (jdgitem[0] == '新股IPO配售确认');
 
-                        if (isbuy) {
-                            stockamount += Math.abs(jdgitem[3]);
-                            stockasset -= Math.abs(jdgitem[5]);
-                        }
-                        else {
-                            stockamount -= Math.abs(jdgitem[3]);
-                            stockasset += Math.abs(jdgitem[5]);
-                        }
+                            jgdhtml += '<tr class="' + (isbuy ? 'bmp_buy' : 'bmp_sell') + ' ' + altercss + '"><td>' + item.t + '</td><td>' + jdgitem[1] + '</td><td>' + stocks['s' + jdgitem[1]] + '</td><td>' + jdgitem[0] + '</td><td>' + jdgitem[2] + '</td><td>' + jdgitem[3] + '</td><td>' + jdgitem[4] + '</td><td>' + jdgitem[5] + '</td></tr>';
 
+                            if (isbuy) {
+                                stockamount += Math.abs(jdgitem[3]);
+                                stockasset -= Math.abs(jdgitem[5]);
+                            }
+                            else {
+                                stockamount -= Math.abs(jdgitem[3]);
+                                stockasset += Math.abs(jdgitem[5]);
+                            }
+                        }
                     }
                 }
             }
