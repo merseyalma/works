@@ -8,29 +8,31 @@
         $('#txtStart').val(utils.getDateStr(last));
         var stockid = $("#slstock").val();
         for (var item in stocks) {
-            $("#slstock").append("<option value='" + item + "'>" + stocks[item] + "(" + item + ")</option>");
+            $("#slstock").append("<option value='" + stocks[item][0] + "' d='" + stocks[item][2] + " " + stocks[item][3] + "'>" + stocks[item][1] + "(" + stocks[item][0] + ")</option>");
         }
 
     }, bindEvent: function () {
         var self = this;
         $("#btnSearch").click(function () { self.query(); });
-
     }
     , query: function () {
         var startDate = $("#txtStart").val();
         var endDate = $("#txtEnd").val();
         var stockid = $("#slstock").val();
+        var selObj = $("#slstock").find("option:selected");
+        var stockname = selObj.text();
+        var index = stockname.indexOf('(');
+        stockname = stockname.substring(0, index);
         if (stockid == '') {
             alert('请选择股票');
             return;
         }
-        stockid = stockid.substring(1, 7);
-
         var jgdhtml = '';
         var altercss = '';
         var orginalTime = '';
-        var stockamount = 0;
-        var stockasset = 0;
+        var stockyl = selObj.attr("d").split(' ');
+        var stockamount = stockyl[1];
+        var stockasset = stockyl[0];
         for (var i = 0; i < jiaogedans.length; i++) {
             var item = jiaogedans[i];
             if (orginalTime != item.t) {
@@ -45,23 +47,14 @@
                     if (jdgitem[1] == stockid) {
                         if (jdgitem[0] != '新股入账') {
                             var isbuy = (jdgitem[0] == '证券买入') || (jdgitem[0] == '红利入账') || (jdgitem[0] == '红股入账') || (jdgitem[0] == '新股IPO配售确认');
+                            jgdhtml += '<tr class="' + (isbuy ? 'bmp_buy' : 'bmp_sell') + ' ' + altercss + '"><td>' + item.t + '</td><td>' + jdgitem[1] + '</td><td>' + stockname + '</td><td>' + jdgitem[0] + '</td><td>' + jdgitem[2] + '</td><td>' + jdgitem[3] + '</td><td>' + jdgitem[4] + '</td><td>' + jdgitem[5] + '</td></tr>';
 
-                            jgdhtml += '<tr class="' + (isbuy ? 'bmp_buy' : 'bmp_sell') + ' ' + altercss + '"><td>' + item.t + '</td><td>' + jdgitem[1] + '</td><td>' + stocks['s' + jdgitem[1]] + '</td><td>' + jdgitem[0] + '</td><td>' + jdgitem[2] + '</td><td>' + jdgitem[3] + '</td><td>' + jdgitem[4] + '</td><td>' + jdgitem[5] + '</td></tr>';
-
-                            if (isbuy) {
-                                stockamount += Math.abs(jdgitem[3]);
-                                stockasset -= Math.abs(jdgitem[5]);
-                            }
-                            else {
-                                stockamount -= Math.abs(jdgitem[3]);
-                                stockasset += Math.abs(jdgitem[5]);
-                            }
                         }
                     }
                 }
             }
         }
         $("#tbjgd >tbody").html(jgdhtml);
-        $("#pstockdes").html(' 持仓:' + stockamount + '股,盈亏:' + stockasset.toFixed(2) + '元');
+        $("#pstockdes").html(' 持仓:' + stockamount + '股,盈亏:' + Number(stockasset).toFixed(2) + '元');
     }
 };
