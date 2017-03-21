@@ -673,7 +673,7 @@ namespace Investment.Framework.Biz
                                 sb.Append(",");
                             }
                             //[1,"002751",61.01,200,12202.00,-12208.10],
-                            sb.AppendFormat("[{0},\"{1}\",{2},{3},{4},{5}]", (subjgd[j].业务名称 == "证券卖出" ? "0" : "1"), subjgd[j].证券代码, subjgd[j].成交价格, subjgd[j].成交数量, subjgd[j].成交价格 * subjgd[j].成交数量, subjgd[j].清算金额);
+                            sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3},{4},{5}]", subjgd[j].业务名称, subjgd[j].证券代码, subjgd[j].成交价格, subjgd[j].成交数量, subjgd[j].成交价格 * subjgd[j].成交数量, subjgd[j].清算金额);
 
                         }
 

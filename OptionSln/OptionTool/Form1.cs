@@ -19,9 +19,11 @@ namespace OptionTool
 
         private void btnOptionCalculate_Click(object sender, EventArgs e)
         {
+          
+            DateTime now = DateTime.Now;
             string err = BzOption.CalculateOption();
 
-            MessageBox.Show(err == string.Empty ? "完成" : err);
+            MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
         }
     }
 }
