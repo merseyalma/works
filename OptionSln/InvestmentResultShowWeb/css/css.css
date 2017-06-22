@@ -85,7 +85,7 @@ ul { list-style-type: none; }
 .table03 > tbody > tr > td { padding: 2px; }
 .hq01 { padding: 3px; font-size: 13.5px;   }
 .hq02 { padding: 3px;  font-size: 13.5px; height: 400px; }
-
+.hq03 { padding: 3px;  font-size: 13.5px; height: 600px; }
 .cur { color: blue !important; }
 .table03 { border: 1px solid #ccc; border-collapse: collapse; margin: 0 auto; width: 80%; }
     .table03 > thead > th { border: 1px solid #ccc; text-align: center; padding: 5px; background-color: #fcfcfc; color: #666; }
