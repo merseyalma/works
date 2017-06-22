@@ -31,7 +31,8 @@ var maxLabel = {
     enabled: true,
     y: -12,
     style: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: '13px'
     },
 
     verticalAlign: 'middle',
@@ -42,7 +43,20 @@ var minLabel = {
     enabled: true,
     y: 12,
     style: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: '13px'
+    },
+
+    verticalAlign: 'middle',
+    overflow: true,
+    crop: false
+};
+var lastestLabel = {
+    enabled: true,
+    y: 12,
+    style: {
+        fontWeight: 'bold',
+        fontSize: '13px'
     },
 
     verticalAlign: 'middle',
@@ -178,8 +192,8 @@ function showView(dotNum, type) {
         ///资产 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
-                var m_asset = info[i].asset  ;
-                
+                var m_asset = info[i].asset;
+
                 if (assetMax < m_asset)
                     assetMax = m_asset;
                 if (assetMin > m_asset)
@@ -189,9 +203,10 @@ function showView(dotNum, type) {
 
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
+
                 timeArr.push(info[i].t);
-                var m_asset = info[i].asset ;
-              
+                var m_asset = info[i].asset;
+
                 if (m_asset == assetMax) {
                     assetDataArray.push({
                         dataLabels: maxLabel,
@@ -206,7 +221,14 @@ function showView(dotNum, type) {
                     });
                 }
                 else {
-                    assetDataArray.push(m_asset);
+                    if (i === 0) {
+                        assetDataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_asset
+                        });
+                    }
+                    else
+                        assetDataArray.push(m_asset);
                 }
 
             }
@@ -334,7 +356,14 @@ function showView(dotNum, type) {
                     });
                 }
                 else {
-                    rateDataArray.push(m_annual);
+                    if (i === 0) {
+                        rateDataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_annual
+                        });
+                    }
+                    else
+                        rateDataArray.push(m_annual);
                 }
 
             }
@@ -428,7 +457,14 @@ function showView(dotNum, type) {
                     });
                 }
                 else {
-                    szDataArray.push(m_sz);
+                    if (i === 0) {
+                        szDataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_sz
+                        });
+                    }
+                    else
+                        szDataArray.push(m_sz);
                 }
             }
         }
@@ -454,7 +490,6 @@ function showView(dotNum, type) {
             },
             plotOptions: {
                 line: {
-
                     dataLabels: {
                         style: { color: '#e15f00' },
                         enabled: isShowLabel
@@ -508,7 +543,14 @@ function showView(dotNum, type) {
                     });
                 }
                 else {
-                    sz50DataArray.push(m_sz50);
+                    if (i === 0) {
+                        sz50DataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_sz50
+                        });
+                    }
+                    else
+                        sz50DataArray.push(m_sz50);
                 }
             }
         }
