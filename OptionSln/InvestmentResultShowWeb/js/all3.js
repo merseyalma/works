@@ -190,6 +190,105 @@ function showView(dotNum, type) {
             info = weekinfo;
         if (type == 2)
             info = monthinfo;
+
+        // 上证 start
+
+        for (var i = 0; i < info.length; i++) {
+            if (i < dotNum) {
+                var m_sz = info[i].sz;
+                if (szMax < m_sz)
+                    szMax = m_sz;
+                if (szMin > m_sz)
+                    szMin = m_sz;
+            }
+        }
+
+
+        for (var i = 0; i < info.length; i++) {
+            if (i < dotNum) {
+                var m_sz = info[i].sz;
+                if (m_sz == szMax) {
+                    szDataArray.push({
+                        dataLabels: maxLabel,
+                        y: m_sz
+                    });
+
+                }
+                else if (m_sz == szMin) {
+                    szDataArray.push({
+                        dataLabels: minLabel,
+                        y: m_sz
+                    });
+                }
+                else {
+                    if (i === 0) {
+                        szDataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_sz
+                        });
+                    }
+                    else
+                        szDataArray.push(m_sz);
+                }
+            }
+        }
+        szMax = Math.ceil(szMax + 5);
+        szMin = Math.floor(szMin - 5);
+
+        szDataArray = szDataArray.reverse();
+
+
+        //上证end
+
+
+        // 上证50 start
+
+        for (var i = 0; i < info.length; i++) {
+            if (i < dotNum) {
+                var m_sz50 = info[i].sz50;
+                if (sz50Max < m_sz50)
+                    sz50Max = m_sz50;
+                if (sz50Min > m_sz50)
+                    sz50Min = m_sz50;
+            }
+        }
+
+        for (var i = 0; i < info.length; i++) {
+            if (i < dotNum) {
+                var m_sz50 = info[i].sz50;
+                if (m_sz50 == sz50Max) {
+                    sz50DataArray.push({
+                        dataLabels: maxLabel,
+                        y: m_sz50
+                    });
+
+                }
+                else if (m_sz50 == sz50Min) {
+                    sz50DataArray.push({
+                        dataLabels: minLabel,
+                        y: m_sz50
+                    });
+                }
+                else {
+                    if (i === 0) {
+                        sz50DataArray.push({
+                            dataLabels: lastestLabel,
+                            y: m_sz50
+                        });
+                    }
+                    else
+                        sz50DataArray.push(m_sz50);
+                }
+            }
+        }
+        sz50Max = (sz50Max + 0.003).toFixed(3);
+        sz50Min = (sz50Min - 0.003).toFixed(3);
+
+        sz50DataArray = sz50DataArray.reverse();
+
+        //上证50end
+
+
         ///资产 start
         for (var i = 0; i < info.length; i++) {
             if (i < dotNum) {
@@ -243,16 +342,15 @@ function showView(dotNum, type) {
         timeArr = timeArr.reverse();
         assetDataArray = assetDataArray.reverse();
 
-
         $('#divasset').highcharts({
             title: {
-                text: '净值',
+                text: '',
                 x: 10
             },
             xAxis: {
                 categories: timeArr
             },
-            yAxis: {
+            yAxis: [{
                 title: {
                     text: ''
                 },
@@ -274,33 +372,64 @@ function showView(dotNum, type) {
                 min: assetMin,
                 max: assetMax
             },
-
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        style: { color: '#e15f00' },
-                        enabled: isShowLabel
-                    },
-                    color: '#e15f00'
-                }
+            {
+                title: {
+                    text: ''
+                },
+                labels: {
+                    format: "{value}"
+                },
+                min: szMin,
+                max: szMax,
+                opposite: true,
             },
+            {
+                title: {
+                    text: ''
+                },
+
+                labels: {
+                    format: "{value}"
+                },
+                min: sz50Min,
+                max: sz50Max,
+                opposite: true,
+            }],
 
             legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
+                verticalAlign: 'top',
+                itemStyle: {
+                    fontSize: '16px'
+                }
             },
 
             series: [{
                 name: '净值',
                 data: assetDataArray,
-                showInLegend: false,
                 marker: {
                     enabled: false
-                }
+                }, lineWidth: 4,
+                color: '#FF0000'
+            },
+            {
+                name: '上证',
+                data: szDataArray,
+                marker: {
+                    enabled: false
+                },
+                yAxis: 1
+
+
+            }, {
+                name: '上证50',
+                data: sz50DataArray,
+                marker: {
+                    enabled: false
+                },
+                yAxis: 2
             }]
         });
+
 
 
         //资产end
@@ -392,13 +521,23 @@ function showView(dotNum, type) {
             xAxis: {
                 categories: timeArr
             },
-            yAxis: {
+            yAxis: [{
                 title: {
                     text: ''
                 },
                 labels: {
                     format: "{value}%"
+                }
+            },
+            {
+                title: {
+                    text: ''
                 },
+                labels: {
+                    format: '{value}%'
+
+                },
+                opposite: true,
                 plotLines: [{
                     value: profitZero,
                     width: 2,
@@ -410,8 +549,8 @@ function showView(dotNum, type) {
                             fontSize: '14px'
                         }
                     }
-                }],
-            },
+                }]
+            }],
             plotOptions: {
                 line: {
                     dataLabels: {
@@ -429,200 +568,20 @@ function showView(dotNum, type) {
                 marker: {
                     enabled: false
                 }
-
             },
             {
                 name: '年化收益率',
                 data: rateDataArray,
-                dataLabels: { color: '#e15f00' },
+                yAxis: 1,
                 marker: {
                     enabled: false
-                } 
+                }
+
             }]
         });
 
 
-        //风险度end
-
-
-        // 上证 start
-
-        for (var i = 0; i < info.length; i++) {
-            if (i < dotNum) {
-                var m_sz = info[i].sz;
-                if (szMax < m_sz)
-                    szMax = m_sz;
-                if (szMin > m_sz)
-                    szMin = m_sz;
-            }
-        }
-
-
-        for (var i = 0; i < info.length; i++) {
-            if (i < dotNum) {
-                var m_sz = info[i].sz;
-                if (m_sz == szMax) {
-                    szDataArray.push({
-                        dataLabels: maxLabel,
-                        y: m_sz
-                    });
-
-                }
-                else if (m_sz == szMin) {
-                    szDataArray.push({
-                        dataLabels: minLabel,
-                        y: m_sz
-                    });
-                }
-                else {
-                    if (i === 0) {
-                        szDataArray.push({
-                            dataLabels: lastestLabel,
-                            y: m_sz
-                        });
-                    }
-                    else
-                        szDataArray.push(m_sz);
-                }
-            }
-        }
-        szMax = Math.ceil(szMax + 5);
-        szMin = Math.floor(szMin - 5);
-
-        szDataArray = szDataArray.reverse();
-
-        $('#divsz').highcharts({
-            title: {
-                text: '上证指数',
-                x: 10
-            },
-            xAxis: {
-                categories: timeArr
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                min: szMin,
-                max: szMax
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        style: { color: '#e15f00' },
-                        enabled: isShowLabel
-                    },
-                    color: '#e15f00'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-
-            series: [{
-                name: '上证指数',
-                data: szDataArray,
-                showInLegend: false,
-                marker: {
-                    enabled: false
-                }
-            }]
-        });
-
-        //上证end
-
-
-        // 上证50 start
-
-        for (var i = 0; i < info.length; i++) {
-            if (i < dotNum) {
-                var m_sz50 = info[i].sz50;
-                if (sz50Max < m_sz50)
-                    sz50Max = m_sz50;
-                if (sz50Min > m_sz50)
-                    sz50Min = m_sz50;
-            }
-        }
-
-        for (var i = 0; i < info.length; i++) {
-            if (i < dotNum) {
-                var m_sz50 = info[i].sz50;
-                if (m_sz50 == sz50Max) {
-                    sz50DataArray.push({
-                        dataLabels: maxLabel,
-                        y: m_sz50
-                    });
-
-                }
-                else if (m_sz50 == sz50Min) {
-                    sz50DataArray.push({
-                        dataLabels: minLabel,
-                        y: m_sz50
-                    });
-                }
-                else {
-                    if (i === 0) {
-                        sz50DataArray.push({
-                            dataLabels: lastestLabel,
-                            y: m_sz50
-                        });
-                    }
-                    else
-                        sz50DataArray.push(m_sz50);
-                }
-            }
-        }
-        sz50Max = (sz50Max + 0.003).toFixed(3);
-        sz50Min = (sz50Min - 0.003).toFixed(3);
-
-        sz50DataArray = sz50DataArray.reverse();
-
-        $('#divsz50').highcharts({
-            title: {
-                text: '上证50ETF',
-                x: 10
-            },
-            xAxis: {
-                categories: timeArr
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                min: sz50Min,
-                max: sz50Max
-            },
-            plotOptions: {
-                line: {
-
-                    dataLabels: {
-                        style: { color: '#e15f00' },
-                        enabled: isShowLabel
-                    },
-                    color: '#e15f00'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-
-            series: [{
-                name: '上证50ETF',
-                data: sz50DataArray,
-                showInLegend: false,
-                marker: {
-                    enabled: false
-                }
-            }]
-        });
-
-        //上证50end
+        //风险度end 
 
     }
 }

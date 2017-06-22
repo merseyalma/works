@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>账户信息</title>
+    <link type="text/css" rel="stylesheet" href="css/css.css" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js?20170303"></script>
+    <script type="text/javascript" src="js/data.js?20170303"></script>
+    <script type="text/javascript" src="js/all3.js?20170303"></script>
+    <link rel="shortcut icon" href="favicon.ico" />
+
+</head>
+<body class="bmp_body" scroll="auto" onload="loadData(0,0)">
+    <div class="bmp_header">
+        <div class="bmp_banner">
+            <div class="bmp_function">
+
+            </div>
+            <div class="bmp_timeshow">
+                <span id="idtime"></span>
+            </div>
+            <div class="bmp_statusshow">
+                <span id="astatus"></span>
+            </div>
+            <div class="bmp_bannertitle">
+                <ul id="ulvwtype">
+                    <li onclick="showView(0, 0)" id="li0" class="highlight">日</li>
+                    <li id="li1" onclick="showView(0,1)">周</li>
+                    <li id="li2" onclick="showView(0,2)">月</li>
+                    <li id="sptitle" class="bmp_bannertitlespan">账户信息</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="width:100%;">
+        <div class="bmp_chart">
+            <!--<div class="bmp_chart_tilte">
+                <span>资产</span>
+                <div class="bmp_chart_tilte_func"></div>
+            </div>-->
+            <div class="bmp_chart_cnt">
+                <div id="divasset" class="hq02"></div>
+
+            </div>
+        </div>
+
+        <div class="bmp_chart">
+            <!--<div class="bmp_chart_tilte">
+                <span style="width:80px;">风险度  </span>
+                <div class="bmp_chart_tilte_func"></div>
+            </div>-->
+            <div class="bmp_chart_cnt">
+                <div id="divrisk" class="hq02"></div>
+
+            </div>
+        </div> 
+    </div>
+</body>
+</html>
