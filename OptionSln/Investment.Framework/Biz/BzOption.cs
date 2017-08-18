@@ -18,7 +18,7 @@ namespace Investment.Framework.Biz
         {
             string err = string.Empty;
             try
-            { 
+            {
                 using (StocksDbDataContext db = new StocksDbDataContext())
                 {
                     db.ExecuteCommand("update dbo.tbStockOptionSummary set 资产=期权资产+上证50ETF*上证50ETF份额+Extra");
@@ -30,11 +30,12 @@ namespace Investment.Framework.Biz
                         #region 日
 
                         int startDay = 0;
+                        DateTime startDate = DateTime.Parse("2017-2-3");
 
                         List<tbStockOptionSummary> olist = db.tbStockOptionSummary.ToList();
                         for (int i = 0; i < olist.Count; i++)
                         {
-                            olist[i].年化收益率 = decimal.Parse(((olist[i].资产 - olist[i].本金) / olist[i].本金 / (i + 1 + startDay) * 36500).ToString("#0.00"));
+                            olist[i].年化收益率 = decimal.Parse(((olist[i].资产 - olist[i].本金) / olist[i].本金 / ((olist[i].recordtime - startDate).Days + 1) * 36500).ToString("#0.00"));
                         }
 
                         db.SubmitChanges();
@@ -82,7 +83,7 @@ namespace Investment.Framework.Biz
 
                         for (int i = weeklist.Count - 1; i >= 0; i--)
                         {
-                            weeklist[i].annualrate = decimal.Parse(((weeklist[i].asset - 1)   / (weeklist.Count - i + startWeek) * 5200).ToString("#0.00"));
+                            weeklist[i].annualrate = decimal.Parse(((weeklist[i].asset - 1) / (weeklist.Count - i + startWeek) * 5200).ToString("#0.00"));
 
                         }
                         sb.Append("\r\nvar weekinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(weeklist, iso) + ";");
@@ -107,7 +108,7 @@ namespace Investment.Framework.Biz
 
                         for (int i = monthlist.Count - 1; i >= 0; i--)
                         {
-                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - 1) /  (monthlist.Count - i) * 1200).ToString("#0.00"));
+                            monthlist[i].annualrate = decimal.Parse(((monthlist[i].asset - 1) / (monthlist.Count - i) * 1200).ToString("#0.00"));
 
                         }
                         sb.Append("\r\nvar monthinfo =" + Newtonsoft.Json.JsonConvert.SerializeObject(monthlist, iso) + ";");
