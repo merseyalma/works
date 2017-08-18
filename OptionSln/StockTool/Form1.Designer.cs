@@ -48,7 +48,7 @@
             // 
             // btnStockPriceImport
             // 
-            this.btnStockPriceImport.Location = new System.Drawing.Point(22, 57);
+            this.btnStockPriceImport.Location = new System.Drawing.Point(158, 12);
             this.btnStockPriceImport.Name = "btnStockPriceImport";
             this.btnStockPriceImport.Size = new System.Drawing.Size(118, 23);
             this.btnStockPriceImport.TabIndex = 2;
@@ -58,7 +58,7 @@
             // 
             // btnProfit
             // 
-            this.btnProfit.Location = new System.Drawing.Point(22, 101);
+            this.btnProfit.Location = new System.Drawing.Point(22, 53);
             this.btnProfit.Name = "btnProfit";
             this.btnProfit.Size = new System.Drawing.Size(118, 23);
             this.btnProfit.TabIndex = 3;
@@ -68,7 +68,7 @@
             // 
             // btnSZIndexImport
             // 
-            this.btnSZIndexImport.Location = new System.Drawing.Point(22, 183);
+            this.btnSZIndexImport.Location = new System.Drawing.Point(158, 53);
             this.btnSZIndexImport.Name = "btnSZIndexImport";
             this.btnSZIndexImport.Size = new System.Drawing.Size(118, 23);
             this.btnSZIndexImport.TabIndex = 4;
@@ -78,7 +78,7 @@
             // 
             // btnExportProfit
             // 
-            this.btnExportProfit.Location = new System.Drawing.Point(22, 141);
+            this.btnExportProfit.Location = new System.Drawing.Point(22, 91);
             this.btnExportProfit.Name = "btnExportProfit";
             this.btnExportProfit.Size = new System.Drawing.Size(118, 23);
             this.btnExportProfit.TabIndex = 5;
@@ -88,7 +88,7 @@
             // 
             // btnExportJgd
             // 
-            this.btnExportJgd.Location = new System.Drawing.Point(22, 224);
+            this.btnExportJgd.Location = new System.Drawing.Point(158, 91);
             this.btnExportJgd.Name = "btnExportJgd";
             this.btnExportJgd.Size = new System.Drawing.Size(118, 23);
             this.btnExportJgd.TabIndex = 6;
@@ -100,7 +100,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(277, 277);
+            this.ClientSize = new System.Drawing.Size(312, 168);
             this.Controls.Add(this.btnExportJgd);
             this.Controls.Add(this.btnExportProfit);
             this.Controls.Add(this.btnSZIndexImport);

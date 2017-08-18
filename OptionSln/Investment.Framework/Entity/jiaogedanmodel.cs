@@ -22,6 +22,8 @@ namespace Investment.Framework.Entity
     {
         public string 证券名称;
         public string 证券代码;
+        public decimal yingli;
+        public int 持仓;
 
     }
 

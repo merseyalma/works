@@ -453,7 +453,7 @@ namespace Investment.Framework.Biz
                             #endregion
                         }
                     }
-                    using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"]   +"idata.js"))
+                    using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"] + "idata.js"))
                     {
                         sw.Write("//时间,上证,收益,市值");
                         sw.Write("\r\nvar dayinfo =[" + profitDayList.ToString().Substring(1) + "];");
@@ -619,6 +619,8 @@ namespace Investment.Framework.Biz
 
                 List<string> yewuqingsuanjineList = new List<string>() { "证券买入", "证券卖出", "红利入账", "新股IPO配售确认" };
 
+                List<string> yewuchichangList = new List<string>() { "证券买入", "证券卖出", "红股入账", "新股IPO配售确认" };
+
                 StringBuilder sb = new StringBuilder();
 
                 using (StocksDbDataContext db = new StocksDbDataContext())
@@ -635,9 +637,10 @@ namespace Investment.Framework.Biz
 
                     }).ToList();
 
-                    List<stockinfo> stockList = list.Select(s => new stockinfo { 证券代码 = s.证券代码, 证券名称 = s.证券名称 }).Distinct(new istockinfoequalitycomparer()).OrderBy(o => o.证券名称).ToList();
+                    List<stockinfo> stockList = list.Where(w=>yewuchichangList.Contains(w.业务名称)).GroupBy(a => new { a.证券名称, a.证券代码 }).Select(s => new stockinfo { 证券代码 = s.Key.证券代码, 证券名称 = s.Key.证券名称, yingli = s.Sum(x => x.清算金额), 持仓 = s.Sum(x => x.成交数量) })
+                       .OrderBy(o => o.证券名称).ToList();
 
-                    sb.Append("var stocks ={");
+                    sb.Append("var stocks =[");
 
                     for (int i = 0; i < stockList.Count; i++)
                     {
@@ -645,10 +648,10 @@ namespace Investment.Framework.Biz
                         {
                             sb.Append(",");
                         }
-                        sb.AppendFormat("\"s{0}\":\"{1}\"", stockList[i].证券代码, stockList[i].证券名称);
+                        sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3}]", stockList[i].证券代码, stockList[i].证券名称, stockList[i].yingli, stockList[i].持仓);
                     }
 
-                    sb.Append("};");
+                    sb.Append("];");
                     sb.AppendLine();
                     sb.Append("var jiaogedans =[");
 

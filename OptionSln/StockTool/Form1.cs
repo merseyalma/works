@@ -1,4 +1,5 @@
-﻿using Investment.Framework.Biz;
+﻿using asprise_ocr_api;
+using Investment.Framework.Biz;
 using Investment.Framework.DB;
 using Investment.Framework.Entity;
 using Investment.Framework.Utility;
@@ -60,10 +61,19 @@ namespace StockTool
 
         private void btnExportJgd_Click(object sender, EventArgs e)
         {
-            DateTime now = DateTime.Now;
-            string err = BzStock.ExportJgd();
+            AspriseOCR.SetUp();
+            AspriseOCR ocr = new AspriseOCR();
+            ocr.StartEngine("eng", AspriseOCR.SPEED_FASTEST);
+            string file = "e:\\2017-03-17.jpg"; // ☜ jpg, gif, tif, pdf, etc.
+            string s = ocr.Recognize(file, -1, -1, -1, -1, -1, AspriseOCR.RECOGNIZE_TYPE_ALL, AspriseOCR.OUTPUT_FORMAT_PLAINTEXT);
+            
+            ocr.StopEngine();
 
-            MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
+
+            //DateTime now = DateTime.Now;
+            //string err = BzStock.ExportJgd();
+
+            //MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
         }
     }
 }

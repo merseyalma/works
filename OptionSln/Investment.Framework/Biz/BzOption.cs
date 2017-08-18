@@ -21,6 +21,8 @@ namespace Investment.Framework.Biz
             { 
                 using (StocksDbDataContext db = new StocksDbDataContext())
                 {
+                    db.ExecuteCommand("update dbo.tbStockOptionSummary set 资产=期权资产+上证50ETF*上证50ETF份额+Extra");
+ 
                     #region 期权
                     using (StreamWriter sw = new StreamWriter(ConfigurationManager.AppSettings["OutputLocation"] + "data.js"))
                     {
