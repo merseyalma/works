@@ -372,16 +372,15 @@ function showView(dotNum, type) {
 
             }
         }
-        var rMax = riskMax;
-        var rMin = riskMin;
-        if (rateMax > rMax)
-            rMax = rateMax;
-        if (rateMin < rMin)
-            rMin = rateMin;
+        //var rMax = riskMax;
+        //var rMin = riskMin;
+        //if (rateMax > rMax)
+        //    rMax = rateMax;
+        //if (rateMin < rMin)
+        //    rMin = rateMin;
 
-        rMax = Math.ceil(rMax + 0.2);
-        rMin = Math.floor(rMin - 0.2);
-
+        //rMax = Math.ceil(rMax + 0.2);
+        //rMin = Math.floor(rMin - 0.2);
         riskDataArray = riskDataArray.reverse();
         rateDataArray = rateDataArray.reverse();
         $('#divrisk').highcharts({
@@ -392,26 +391,44 @@ function showView(dotNum, type) {
             xAxis: {
                 categories: timeArr
             },
-            yAxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    format: "{value}%"
-                },
-                plotLines: [{
-                    value: profitZero,
-                    width: 2,
-                    color: '#ff0000',
-                    label: {
-                        text: "0", style: {
-                            color: 'red',
-                            fontWeight: 'bold',
-                            fontSize: '14px'
+            yAxis: [
+              {
+                  title: {
+                      text: ''
+                  },
+                  labels: {
+                      format: "{value}%"
+                  },
+                  min: riskMin,
+                  max: riskMax
+              },
+              {
+                  title: {
+                      text: ''
+                  },
+                  labels: {
+                      format: '{value}%'
+                  },
+                  min: rateMin,
+                  max: rateMax,
+                  opposite: true,
+                  plotLines: [
+                    {
+                        value: profitZero,
+                        width: 2,
+                        color: '#ff0000',
+                        label: {
+                            text: "0",
+                            style: {
+                                color: 'red',
+                                fontWeight: 'bold',
+                                fontSize: '14px'
+                            }
                         }
                     }
-                }],
-            },
+                  ]
+              }
+            ],
             plotOptions: {
                 line: {
                     dataLabels: {
@@ -422,23 +439,23 @@ function showView(dotNum, type) {
             legend: {
                 verticalAlign: 'top'
             },
-
-            series: [{
-                name: '风险度',
-                data: riskDataArray,
-                marker: {
-                    enabled: false
-                }
-
-            },
-            {
-                name: '年化收益率',
-                data: rateDataArray,
-                dataLabels: { color: '#e15f00' },
-                marker: {
-                    enabled: false
-                } 
-            }]
+            series: [
+              {
+                  name: '风险度',
+                  data: riskDataArray,
+                  marker: {
+                      enabled: false
+                  }
+              },
+              {
+                  name: '年化收益率',
+                  data: rateDataArray,
+                  yAxis: 1,
+                  marker: {
+                      enabled: false
+                  }
+              }
+            ]
         });
 
 
