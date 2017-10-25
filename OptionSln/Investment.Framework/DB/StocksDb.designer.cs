@@ -1446,7 +1446,7 @@ namespace Investment.Framework.DB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_年化收益率", DbType="Decimal(18,2)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_年化收益率", DbType="Decimal(18,4)")]
 		public System.Nullable<decimal> 年化收益率
 		{
 			get

@@ -60,20 +60,11 @@ namespace StockTool
         }
 
         private void btnExportJgd_Click(object sender, EventArgs e)
-        {
-            AspriseOCR.SetUp();
-            AspriseOCR ocr = new AspriseOCR();
-            ocr.StartEngine("eng", AspriseOCR.SPEED_FASTEST);
-            string file = "e:\\2017-03-17.jpg"; // ☜ jpg, gif, tif, pdf, etc.
-            string s = ocr.Recognize(file, -1, -1, -1, -1, -1, AspriseOCR.RECOGNIZE_TYPE_ALL, AspriseOCR.OUTPUT_FORMAT_PLAINTEXT);
-            
-            ocr.StopEngine();
+        { 
+            DateTime now = DateTime.Now;
+            string err = BzStock.ExportJgd();
 
-
-            //DateTime now = DateTime.Now;
-            //string err = BzStock.ExportJgd();
-
-            //MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
+            MessageBox.Show(err == string.Empty ? "完成" + ((DateTime.Now - now).TotalMilliseconds) : err);
         }
     }
 }
