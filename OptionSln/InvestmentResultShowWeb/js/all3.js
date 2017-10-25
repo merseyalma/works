@@ -501,16 +501,15 @@ function showView(dotNum, type) {
 
             }
         }
-        var rMax = riskMax;
-        var rMin = riskMin;
-        if (rateMax > rMax)
-            rMax = rateMax;
-        if (rateMin < rMin)
-            rMin = rateMin;
+        //var rMax = riskMax;
+        //var rMin = riskMin;
+        //if (rateMax > rMax)
+        //    rMax = rateMax;
+        //if (rateMin < rMin)
+        //    rMin = rateMin;
 
-        rMax = Math.ceil(rMax + 0.2);
-        rMin = Math.floor(rMin - 0.2);
-
+        //rMax = Math.ceil(rMax + 0.2);
+        //rMin = Math.floor(rMin - 0.2);
         riskDataArray = riskDataArray.reverse();
         rateDataArray = rateDataArray.reverse();
         $('#divrisk').highcharts({
@@ -528,6 +527,9 @@ function showView(dotNum, type) {
                 labels: {
                     format: "{value}%"
                 }
+                ,
+                min: riskMin,
+                max: riskMax
             },
             {
                 title: {
@@ -537,6 +539,8 @@ function showView(dotNum, type) {
                     format: '{value}%'
 
                 },
+                min: rateMin,
+                max: rateMax,
                 opposite: true,
                 plotLines: [{
                     value: profitZero,
