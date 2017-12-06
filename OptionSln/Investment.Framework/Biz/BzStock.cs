@@ -637,8 +637,10 @@ namespace Investment.Framework.Biz
 
                     }).ToList();
 
-                    List<stockinfo> stockList = list.Where(w=>yewuchichangList.Contains(w.业务名称)).GroupBy(a => new { a.证券名称, a.证券代码 }).Select(s => new stockinfo { 证券代码 = s.Key.证券代码, 证券名称 = s.Key.证券名称, yingli = s.Sum(x => x.清算金额), 持仓 = s.Sum(x => x.成交数量) })
+                    List<stockinfo> stockList = list.Where(w => yewuchichangList.Contains(w.业务名称)).GroupBy(a => new { a.证券名称, a.证券代码 }).Select(s => new stockinfo { 证券代码 = s.Key.证券代码, 证券名称 = s.Key.证券名称, yingli = s.Sum(x => x.清算金额), 持仓 = s.Sum(x => x.成交数量) })
                        .OrderBy(o => o.证券名称).ToList();
+
+                    List<Proc_StockNewPriceResult> stockNewPriceList = db.Proc_StockNewPrice().ToList();
 
                     sb.Append("var stocks =[");
 
@@ -648,7 +650,9 @@ namespace Investment.Framework.Biz
                         {
                             sb.Append(",");
                         }
-                        sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3}]", stockList[i].证券代码, stockList[i].证券名称, stockList[i].yingli, stockList[i].持仓);
+                        Proc_StockNewPriceResult priceResult = stockNewPriceList.SingleOrDefault(s => s.证券代码 == stockList[i].证券代码);
+
+                        sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3},{4},\"{5}\"]", stockList[i].证券代码, stockList[i].证券名称, stockList[i].yingli, stockList[i].持仓, priceResult.收盘价格,priceResult.日期.ToString("yyyy-MM-dd"));
                     }
 
                     sb.Append("];");

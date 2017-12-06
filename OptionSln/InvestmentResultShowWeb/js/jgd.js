@@ -8,7 +8,7 @@
         $('#txtStart').val(utils.getDateStr(last));
         var stockid = $("#slstock").val();
         for (var item in stocks) {
-            $("#slstock").append("<option value='" + stocks[item][0] + "' d='" + stocks[item][2] + " " + stocks[item][3] + "'>" + stocks[item][1] + "(" + stocks[item][0] + ")</option>");
+            $("#slstock").append("<option value='" + stocks[item][0] + "' d='" + stocks[item][2] + " " + stocks[item][3] + " " + stocks[item][4].toString() + " " + stocks[item][5].toString() + "'>" + stocks[item][1] + "(" + stocks[item][0] + ")</option>");
         }
 
     }, bindEvent: function () {
@@ -33,6 +33,8 @@
         var stockyl = selObj.attr("d").split(' ');
         var stockamount = stockyl[1];
         var stockasset = stockyl[0];
+        var stockprice = stockyl[2];
+        var stockpricedate = stockyl[3];
         for (var i = 0; i < jiaogedans.length; i++) {
             var item = jiaogedans[i];
             if (orginalTime != item.t) {
@@ -55,6 +57,6 @@
             }
         }
         $("#tbjgd >tbody").html(jgdhtml);
-        $("#pstockdes").html(' 持仓:' + stockamount + '股,盈亏:' + Number(stockasset).toFixed(2) + '元');
+        $("#pstockdes").html('最新日期：' + stockpricedate + '<br/>价格：' + stockprice + '<br/>持仓：' + stockamount + '股<br/>盈亏：' + (Number(stockasset) + Number(stockamount) * Number(stockprice)).toFixed(2) + '元');
     }
 };

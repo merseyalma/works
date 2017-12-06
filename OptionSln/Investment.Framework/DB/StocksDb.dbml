@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Stocks" Class="StocksDbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=MERSEY-PC;Initial Catalog=Stocks;Persist Security Info=True;User ID=sa" SettingsObjectName="Investment.Framework.Properties.Settings" SettingsPropertyName="StocksConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=Stocks;Persist Security Info=True;User ID=sa" SettingsObjectName="Investment.Framework.Properties.Settings" SettingsPropertyName="StocksConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbStockShare" Member="tbStockShare">
     <Type Name="tbStockShare">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -103,6 +103,14 @@
       <Column Name="成交日期" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="类型" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
       <Column Name="c" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Proc_StockNewPrice" Method="Proc_StockNewPrice">
+    <ElementType Name="Proc_StockNewPriceResult">
+      <Column Name="证券代码" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="收盘价格" Type="System.Decimal" DbType="Decimal(12,4) NOT NULL" CanBeNull="false" />
+      <Column Name="日期" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="row" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>
