@@ -196,16 +196,41 @@ namespace Investment.Framework.Biz
                             DateTime tempTime = time;
                             if (item.成交日期 >= tempTime)
                                 tempTime = item.成交日期;
+                            string leixing =item.类型;
 
-                            string result = WebSvcCaller.QueryGetWebService(string.Format(url, item.证券代码, Math.Ceiling((DateTime.Now - tempTime).TotalDays * 5 / 7) + 7, item.类型), string.Empty, null, ref err);
+                            string result = WebSvcCaller.QueryGetWebService(string.Format(url, item.证券代码, Math.Ceiling((DateTime.Now - tempTime).TotalDays * 5 / 7) + 7, leixing), string.Empty, null, ref err);
+                             
                             if (err == string.Empty)
                             {
-
+                                int qtcount = 0;
                                 result = result.Substring(result.IndexOf("{"));
                                 JObject jsonObj = JObject.Parse(result);
 
                                 JToken qtqday = jsonObj.First.Next.Next.First.First.First.First.First;
-                                LogHelper.Info(item.证券名称 + "," + item.证券代码 + "," + qtqday.Count());
+
+
+                                qtcount = qtqday.Count();
+                                if (qtcount == 0)
+                                {
+                                    leixing = "sh";
+                                    result = WebSvcCaller.QueryGetWebService(string.Format(url, item.证券代码, Math.Ceiling((DateTime.Now - tempTime).TotalDays * 5 / 7) + 7, leixing), string.Empty, null, ref err);
+
+                                    if (err == string.Empty)
+                                    {
+                                        result = result.Substring(result.IndexOf("{"));
+                                        jsonObj = JObject.Parse(result);
+
+                                        qtqday = jsonObj.First.Next.Next.First.First.First.First.First;
+                                        qtcount = qtqday.Count();
+                                        if(qtcount==0)
+                                        {
+                                            throw new Exception("no result " + item.证券名称 + "," + item.证券代码);
+                                        }
+
+                                    }
+                                }
+
+                                LogHelper.Info(item.证券名称 + "," + item.证券代码 + "," + qtcount);
                                 foreach (var qday in qtqday)
                                 {
                                     DateTime dayTime = DateTime.Parse(qday[0].ToString());
@@ -220,7 +245,7 @@ namespace Investment.Framework.Biz
                                         stockPrice.收盘价格 = decimal.Parse(qday[2].ToString());
                                         stockPrice.最高价格 = decimal.Parse(qday[3].ToString());
                                         stockPrice.最低价格 = decimal.Parse(qday[4].ToString());
-                                        stockPrice.类型 = item.类型;
+                                        stockPrice.类型 = leixing;
 
                                         stockPriceList.Add(stockPrice);
                                         count++;
@@ -651,8 +676,8 @@ namespace Investment.Framework.Biz
                             sb.Append(",");
                         }
                         Proc_StockNewPriceResult priceResult = stockNewPriceList.SingleOrDefault(s => s.证券代码 == stockList[i].证券代码);
-
-                        sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3},{4},\"{5}\"]", stockList[i].证券代码, stockList[i].证券名称, stockList[i].yingli, stockList[i].持仓, priceResult.收盘价格,priceResult.日期.ToString("yyyy-MM-dd"));
+                        LogHelper.Exception(stockList[i].证券代码);
+                        sb.AppendFormat("[\"{0}\",\"{1}\",{2},{3},{4},\"{5}\"]", stockList[i].证券代码, stockList[i].证券名称, stockList[i].yingli, stockList[i].持仓, priceResult.收盘价格, priceResult.日期.ToString("yyyy-MM-dd"));
                     }
 
                     sb.Append("];");
@@ -698,7 +723,7 @@ namespace Investment.Framework.Biz
             }
             catch (Exception ex)
             {
-
+                LogHelper.Exception(ex.Message + ex.StackTrace);
                 err = ex.Message;
             }
 

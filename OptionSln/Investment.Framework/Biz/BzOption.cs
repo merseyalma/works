@@ -29,7 +29,7 @@ namespace Investment.Framework.Biz
                         StringBuilder sb = new StringBuilder();
                         #region 日
 
-                        DateTime startDate = DateTime.Parse("2017-2-3");
+                        DateTime startDate = DateTime.Parse("2018-1-26");
 
                         List<tbStockOptionSummary> olist = db.tbStockOptionSummary.ToList();
                         for (int i = 0; i < olist.Count; i++)
